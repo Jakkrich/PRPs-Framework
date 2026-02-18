@@ -1,0 +1,14 @@
+{
+    "requirements": [
+        "Analyze `prp_workflow.py` logic for prompt interviewing",
+        "Create `apps/tools/spec_generator.py` adapted for PRPs-Framework",
+        "Ensure script outputs to `.auto-claude/specs/{ID}/spec.md`",
+        "Implement context gathering features (file suggestion)",
+        "Update `07-Spec.md` command to use this new tool"
+    ],
+    "constraints": [
+        "Do not import loop/retry logic",
+        "Do not use external state files like `.ralph.state`",
+        "Must run compatibly with current Python environment"
+    ]
+}

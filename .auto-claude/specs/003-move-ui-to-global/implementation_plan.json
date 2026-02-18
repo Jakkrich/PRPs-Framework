@@ -1,0 +1,64 @@
+{
+  "feature": "Move .auto-claude-ui to Global AppData",
+  "description": "Move the local .auto-claude-ui folder from the project root to the global AppData directory (%APPDATA%\\auto-claude-ui) to reduce project weight.",
+  "status": "done",
+  "planStatus": "completed",
+  "created_at": "2026-02-19T01:12:29+07:00",
+  "updated_at": "2026-02-18T19:37:01.169Z",
+  "phases": [
+    {
+      "name": "Phase 1: Migration",
+      "subtasks": [
+        {
+          "id": "backup-global",
+          "description": "Backup existing global data if any (Move-Item -Force to backup location)",
+          "status": "completed",
+          "files": [],
+          "verification": "Test-Path \"$env:APPDATA\\auto-claude-ui_backup_*\""
+        },
+        {
+          "id": "move-folder",
+          "description": "Move content of e:\\PRPs-Framework\\.auto-claude-ui to %APPDATA%\\auto-claude-ui",
+          "status": "completed",
+          "files": [
+            "e:\\PRPs-Framework\\.auto-claude-ui",
+            "%APPDATA%\\auto-claude-ui"
+          ],
+          "verification": "Test-Path \"$env:APPDATA\\auto-claude-ui\""
+        },
+        {
+          "id": "cleanup-local",
+          "description": "Remove local .auto-claude-ui folder from project root",
+          "status": "completed",
+          "files": [
+            "e:\\PRPs-Framework\\.auto-claude-ui"
+          ],
+          "verification": "-not (Test-Path \"e:\\PRPs-Framework\\.auto-claude-ui\")"
+        }
+      ]
+    },
+    {
+      "name": "Phase 2: Configuration & Cleanup",
+      "subtasks": [
+        {
+          "id": "update-gitignore",
+          "description": "Add .auto-claude-ui/ to .gitignore to prevent future tracking",
+          "status": "completed",
+          "files": [
+            "e:\\PRPs-Framework\\.gitignore"
+          ],
+          "verification": "Select-String -Path \"e:\\PRPs-Framework\\.gitignore\" -Pattern \"\\.auto-claude-ui/\""
+        },
+        {
+          "id": "verify-config",
+          "description": "Verify application picks up global configuration (Check behavior)",
+          "status": "completed",
+          "files": [],
+          "verification": "echo \"Manual verification required: Check if app loads settings correctly\""
+        }
+      ]
+    }
+  ],
+  "xstateState": "done",
+  "executionPhase": "complete"
+}

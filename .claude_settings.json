@@ -1,0 +1,29 @@
+{
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true
+  },
+  "permissions": {
+    "defaultMode": "acceptEdits",
+    "allow": [
+      "Read(./**)",
+      "Write(./**)",
+      "Edit(./**)",
+      "Glob(./**)",
+      "Grep(./**)",
+      "Read(E:\\PRPs-Framework/**)",
+      "Write(E:\\PRPs-Framework/**)",
+      "Edit(E:\\PRPs-Framework/**)",
+      "Glob(E:\\PRPs-Framework/**)",
+      "Grep(E:\\PRPs-Framework/**)",
+      "Read(E:\\PRPs-Framework\\.auto-claude\\roadmap/**)",
+      "Write(E:\\PRPs-Framework\\.auto-claude\\roadmap/**)",
+      "Edit(E:\\PRPs-Framework\\.auto-claude\\roadmap/**)",
+      "Bash(*)",
+      "WebFetch(*)",
+      "WebSearch(*)",
+      "mcp__context7__resolve-library-id(*)",
+      "mcp__context7__query-docs(*)"
+    ]
+  }
+}
