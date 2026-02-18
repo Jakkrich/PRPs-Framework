@@ -20,6 +20,15 @@
   - `issues/`: โฟลเดอร์เก็บงานแยกตาม ID (เช่น `EXAMPLE-001/`)
   - `PRPs/`: ไฟล์ PRP (Legacy หรือพื้นที่เก็บรวม)
   - `references/`: โค้ดตัวอย่างและแพทเทิร์นสำหรับ AI ใช้แบบ dynamic
+  - `apps/`: Core Engine (Backend & Frontend)
+  - `apps/backend/`: Backend tools and prompts (replacing legacy `_tools`)
+  - `apps/frontend/`: Frontend dashboard for monitoring
+
+### Project Context (Auto-Synced)
+- **Detected Stack**: Python, JavaScript, C, C++
+- **Allowed Commands**: `python`, `pip`, `npm`, `node`, `git`, `gh`, `fd`, `rg`, `ls`, `grep`, `cat`, etc. (Check `.auto-claude-security.json` for full list)
+- **Tools Venv**: `.\PRPs-Framework\apps\backend\venv\`
+- **Last Sync**: 2026-02-18 22:42 (Local Time)
 
 ### Features
 - [EXAMPLE-001] Implement Issue-Based Folders - PRP: `PRPs-Framework/issues/EXAMPLE-001/prp.md`
@@ -29,6 +38,7 @@
 
 ### Changes / Refactors
 - [PRPS-001] Align PRPs-Framework with Git Naming Conventions - PRP: `PRPs-Framework/issues/PRPS-001_align-git-conventions/prp.md`
+- [PRPS-002] Move .auto-claude-ui to Global AppData - Spec: `.auto-claude/specs/003-move-ui-to-global/spec.md`
 
 ### Examples
 - [Project References] - `PRPs-Framework/references/`
@@ -38,4 +48,4 @@
 
 ### Other Considerations (Global Gotchas)
 - **External Ref ID**: ตรวจสอบ External Ref ID ทุกครั้งก่อนสร้างไฟล์หรือแตก branch ใหม่.
-- **Index Refresh**: สามารถรันคำสั่ง `/00-Init-Project-Context` ซ้ำได้เพื่ออัปเดตไฟล์นี้ให้เป็นปัจจุบัน.
+- **Index Refresh**: สามารถรันคำสั่ง `/init-sync` ซ้ำได้เพื่ออัปเดตไฟล์นี้ให้เป็นปัจจุบัน.
