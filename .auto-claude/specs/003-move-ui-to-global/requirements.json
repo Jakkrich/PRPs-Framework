@@ -1,4 +1,0 @@
-{
-    "task_description": "Move the local .auto-claude-ui folder from the project root to the global AppData directory (%APPDATA%\\auto-claude-ui) to reduce project weight.",
-    "workflow_type": "refactor"
-}

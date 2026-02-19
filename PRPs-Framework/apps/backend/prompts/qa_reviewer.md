@@ -427,15 +427,12 @@ If skipped: [Explicit justification — must reference git diff showing no UI fi
 ### Minor (Nice to Fix)
 1. [Issue description] - [File/Location]
 
-## Recommended Fixes
+## Human Review Checklist
 
-For each critical/major issue, describe what the Coder Agent should do:
-
-### Issue 1: [Title]
-- **Problem**: [What's wrong]
-- **Location**: [File:line or component]
-- **Fix**: [What to do]
-- **Verification**: [How to verify it's fixed]
+Define a specific list of tasks the Human Reviewer MUST perform before final approval:
+- [ ] **Technical Check**: [e.g. Verify database migrations in production]
+- [ ] **Functional Check**: [e.g. Try logging in with a new user]
+- [ ] **Visual Check**: [e.g. Verify the layout on mobile devices]
 
 ## Verdict
 

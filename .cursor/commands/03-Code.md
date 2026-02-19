@@ -5,47 +5,92 @@ Execute the implementation plan for a task in the `.auto-claude` system.
 ## Usage
 
 ```
-/03-Code {ID} [--auto-qa]
+/03-Code {ID}
 ```
 
-Example: `/03-Code 003`
+Where `{ID}` is the numeric prefix of the task (e.g., `012`).
 
-## Input
+---
 
-- **Plan File**: `.auto-claude/specs/{ID}-{slug}/implementation_plan.json`
-- **Spec File**: `.auto-claude/specs/{ID}-{slug}/spec.md` (for reference)
+## Internal Process & AI Agent Instructions
 
-## Process
+### Step 0: Load & Validate Context
 
-1.  **Initialize Execution**
-    - Read `implementation_plan.json`.
-    - Set task `status` to `in_progress` in the JSON file.
-    - **Update Spec**: Update `Status` in `spec.md` to `IN PROGRESS`.
-    - Identify current phase and subtasks.
+ก่อนเริ่มเขียนโค้ด Agent **ต้อง**:
 
-2.  **Execute Subtasks**
-    - Iterate through pending subtasks in the current phase.
-    - For each subtask:
-      - **Context**: Read `spec.md` and relevant files.
-      - **Action**: Implement changes (code, config, etc.).
-      - **Verification**: Run the verification command specified in the subtask (or infer one).
-      - **Update JSON**:
-        - Mark subtask status as `completed`.
-        - Update `phaseProgress` (0-100%).
-        - Save `implementation_plan.json` after each subtask.
+1. **Locate Task**: ค้นหาโฟลเดอร์ `.auto-claude/specs/{ID}-*/`
+2. **Read Plan**: อ่าน `implementation_plan.json` เพื่อรับ Phases & Subtasks
+3. **Read Spec**: อ่าน `spec.md` เพื่อรับ Requirements & Context
+4. **Read Metadata**: อ่าน `task_metadata.json` เพื่อรับ priority/complexity
+5. **Validate Readiness**: ตรวจสอบว่า:
+   - `implementation_plan.json` มี `phases` ที่ไม่ว่าง
+   - `status` ไม่ใช่ `done` (ยังไม่เสร็จ)
+   - ถ้า `status` ยังเป็น `pending` → ให้แนะนำผู้ใช้รัน `/02-Plan {ID}` ก่อน
 
-3.  **Phase Transition**
-    - When all subtasks in a phase are done:
-      - Move to the next phase.
-      - Update `executionPhase` in JSON.
+---
 
-4.  **Completion & AI Review**
-    - When all phases are complete:
-      - Run final full verification.
-      - Set task `status` to `ai_review` in `implementation_plan.json`.
-      - **Update Spec**: Update `Status` in `spec.md` to `AI REVIEW`.
-      - **Auto-Trigger**: Run command `/04-Verify {ID}` immediately to generate QA report.
+### Step 1: Initialize Execution
+
+```powershell
+python PRPs-Framework/apps/tools/json_executor.py set-status {plan_path} in_progress
+```
+
+---
+
+### Step 2: Execute Subtasks (Loop)
+
+```
+While True:
+  1. Get Next Task:
+     python PRPs-Framework/apps/tools/json_executor.py next {plan_path}
+  
+  2. If output is "NO_PENDING_TASKS" → Break loop
+  
+  3. Parse output: TASK_ID, DESCRIPTION, FILES
+  
+  4. Context: Read spec.md and relevant files
+  
+  5. Action: Implement changes for the task description
+  
+  6. Verification: Run verification command specified in subtask
+  
+  7. Complete:
+     python PRPs-Framework/apps/tools/json_executor.py complete {plan_path} {TASK_ID} --files {touched_files}
+  
+  8. Checkpoint (if Git): git add -A && git commit -m "checkpoint: {TASK_ID} - {short_desc}"
+```
+
+### Validation Guidelines
+
+ระหว่างทำงานแต่ละ Subtask ให้ Agent:
+- **Lint Check**: รันคำสั่ง lint ของโปรเจกต์ (ถ้ามี)
+- **Type Check**: รัน type checker (ถ้ามี)
+- **Test**: รัน tests ที่เกี่ยวข้อง (ถ้ามี)
+- **Fix immediately**: ถ้า validation fail ให้แก้ไขทันทีก่อนไปทำ Subtask ถัดไป
+- **Golden Rule**: อย่าสะสม broken state — แก้ให้ผ่านก่อนไปต่อ
+
+---
+
+### Step 3: Phase Transition
+
+เมื่อ Loop จบ (ไม่มี Pending Tasks):
+- ตรวจสอบว่ายังมี Phase ถัดไปหรือไม่
+- ถ้ามี → เริ่ม Loop ใหม่สำหรับ Phase ถัดไป
+- ถ้าไม่มี → ไปที่ Step 4
+
+---
+
+### Step 4: Completion & Transition to QA
+
+เมื่อทุก Phase เสร็จสมบูรณ์:
+1. **Final Verification**: รันการตรวจสอบรวมทั้งหมด
+2. **Auto-Trigger QA**: Agent ต้องรันคำสั่ง `/04-Verify {ID}` ทันที (ไม่ต้องรอผู้ใช้สั่ง)
+3. **Status Update**: `json_executor.py` จะอัปเดตสถานะเป็น `ai_review` อัตโนมัติ
+
+---
 
 ## Output
 
-- **Updated File**: `.auto-claude/specs/{ID}-{slug}/implementation_plan.json` with progress and final status.
+- **Updated File**: `.auto-claude/specs/{ID}/implementation_plan.json` with progress and final status.
+- **Git Commits**: Checkpoint commits สำหรับทุก Subtask ที่เสร็จสิ้น (ถ้าใช้ Git)
+- **Auto-QA**: QA Report จะถูกสร้างอัตโนมัติโดย `/04-Verify`

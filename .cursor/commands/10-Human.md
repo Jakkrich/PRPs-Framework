@@ -28,17 +28,17 @@
 28: 
 29: 2.  **Update Artifacts**
 30:     - **Approve**:
-31:       - status -> `done` (in `implementation_plan.json`)
+31:       - Run `python PRPs-Framework/apps/tools/json_executor.py set-status {plan_path} done`
 32:       - Status -> `DONE` (in `spec.md`)
 33:     - **Reject**:
-          - status -> `in_progress` (if fixing) or `backlog` (if resetting)
+34:       - Run `python PRPs-Framework/apps/tools/json_executor.py set-status {plan_path} in_progress` (if fixing)
 35:       - Status -> `REJECTED` or `NEEDS WORK`
-36:       - Add rejection reason to `implementation_plan.json`.
+36:       - Add rejection reason to `plan.md` or `spec.md`.
 37:     - **Review**:
-38:       - status -> `human_review`
+38:       - Run `python PRPs-Framework/apps/tools/json_executor.py set-status {plan_path} human_review`
 39:       - Status -> `REVIEW NEEDED`
 40:     - **Feedback**:
-41:       - Append feedback to `spec.md` or a new `feedback.md` file.
+41:       - Append feedback to `spec.md` or `plan.md`.
 42: 
 43: 3.  **Notify**
 44:     - Log the action and result.

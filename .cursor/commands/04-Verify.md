@@ -1,6 +1,8 @@
 # Verify Quality
 
-Run comprehensive quality assurance checks on the implemented task.
+## Spec Folder: $ARGUMENTS
+
+Run validation on the feature and generate a QA report.
 
 ## Usage
 
@@ -8,60 +10,113 @@ Run comprehensive quality assurance checks on the implemented task.
 /04-Verify {ID}
 ```
 
-Example: `/04-Verify 003`
+Where `{ID}` is the numeric prefix of the task (e.g., `012`).
 
-## Input
+---
 
-- **Spec File**: `.auto-claude/specs/{ID}-{slug}/spec.md`
-- **Plan File**: `.auto-claude/specs/{ID}-{slug}/implementation_plan.json`
+## Internal Process & AI Agent Instructions
 
-## Process
+### Step 0: Load Context
 
-1.  **Identify Verification Steps**
-    - Read `implementation_plan.json` to find verification commands defined in subtasks.
-    - Inspect codebase to identify standard tests (unit, integration, linting).
+1. **Locate Task**: ค้นหาโฟลเดอร์ `.auto-claude/specs/{ID}-*/`
+2. **Read Plan**: อ่าน `implementation_plan.json` เพื่อรับ:
+   - ไฟล์ที่ถูกแก้ไข (จาก `files` ใน completed tasks)
+   - ตรวจสอบว่า Subtasks ทั้งหมดเป็น `completed`
+3. **Read Spec**: อ่าน `spec.md` เพื่อเปรียบเทียบ Requirements กับผลลัพธ์
+4. **Read Metadata**: อ่าน `task_metadata.json` เพื่อพิจารณาระดับความเข้มข้นของ QA
 
-2.  **Execute Validation Loop**
-    - **Step 1: Syntax & Linting**: Run project linters/formatters.
-    - **Step 2: Core Logic**: Run specific tests related to the changed files.
-    - **Step 3: Integration**: Run broader tests if applicable.
-    - **Step 4: Deep Code Analysis**:
-        - Load persona from `.auto-claude/agents/code-reviewer.md` and review changes.
-        - Load persona from `.auto-claude/agents/silent-failure-hunter.md` and check for error handling issues.
+---
 
-3.  **Generate Report**
-    - Create `qa_report.md` in `.auto-claude/specs/{ID}-{slug}/`.
-    - Format:
-      ```markdown
-      # QA Report: {TASK_TITLE}
+### Step 1: Analysis & Validation
 
-      ## Summary
-      - **Status**: PASS / FAIL
-      - **Date**: {ISO_DATE}
+#### Level 1: Syntax & Style
+- รันคำสั่ง Lint ของโปรเจกต์ (ถ้ามี)
+- ตรวจสอบ Code formatting
 
-      ## Automated Checks
-      - **Linting**: P/F - {DETAILS}
-      - **Unit Tests**: P/F - {DETAILS}
-      - **Integration**: P/F - {DETAILS}
+#### Level 2: Unit Tests
+- รัน Test suite ที่เกี่ยวข้อง (ถ้ามี)
+- ตรวจสอบ Test coverage
 
-      ## Agent Analysis
-      ### Code Reviewer
-      {OUTPUT_FROM_CODE_REVIEWER}
+#### Level 3: Integration (Context-Dependent)
+- ทำ Smoke test ของ Feature ที่สร้างขึ้น
+- ตรวจสอบว่าไม่มี Regression
 
-      ### Silent Failure Hunter
-      {OUTPUT_FROM_SILENT_FAILURE_HUNTER}
+#### Level 4: Requirements Match
+- ตรวจสอบว่าทุก Requirement ใน `spec.md` ถูก Implement แล้ว
+- ระบุ Requirement ที่ยังไม่ครบ (ถ้ามี)
 
-      ## Issues Found
-      - [ ] {ISSUE_DESCRIPTION}
-      ```
+---
 
-4.  **Update Task Status**
-    - If **PASS**: Update `status` in `implementation_plan.json` to `human_review`.
-    - **Update Spec**: If PASS, update `Status` in `spec.md` to `REVIEW NEEDED` (or `VERIFIED`).
-    - If **FAIL**: Update `status` in `implementation_plan.json` to `qa_fixing` (or `error`).
+### Step 2: Generate QA Report
+
+สร้างไฟล์ `qa_report.md` ใน `.auto-claude/specs/{ID}/`:
+
+```markdown
+# QA Report: {Feature Name}
+- Date: {YYYY-MM-DD}
+- Task ID: {ID}-{slug}
+- Status: PASS / FAIL / PARTIAL
+
+## AI Analysis Summary
+- Category: {from metadata}
+- Priority: {from metadata}
+- Complexity: {from metadata}
+
+## Results
+
+### Requirements Coverage
+| # | Requirement | Status | Notes |
+|---|-------------|--------|-------|
+| 1 | ...         | ✅/❌  | ...   |
+
+### Validation Results
+| Level | Check | Result | Details |
+|-------|-------|--------|---------|
+| L1    | Lint  | ✅/❌  | ...     |
+| L2    | Tests | ✅/❌  | ...     |
+
+### Files Modified
+- `path/to/file.ts` (added/modified/deleted)
+
+## Issues Found
+- [ ] Issue 1: ...
+- [ ] Issue 2: ...
+
+## Recommendation
+APPROVE / NEEDS_FIX / NEEDS_REVIEW
+```
+
+---
+
+### Step 3: Update Plan Status
+
+| QA Result    | New Status     | Action                         |
+|-------------|----------------|--------------------------------|
+| PASS        | `human_review` | พร้อมให้คนรีวิว                  |
+| FAIL        | `in_progress`  | กลับไปแก้ไข (แนะนำรัน `/03-Code`) |
+| PARTIAL     | `ai_review`    | AI ต้องตรวจเพิ่มเติม             |
+
+```powershell
+python PRPs-Framework/apps/tools/json_executor.py set-status {plan_path} {new_status}
+```
+
+---
+
+### Step 4: Output Summary
+
+สรุปให้ผู้ใช้:
+
+```
+📋 QA Report: {ID}-{slug}
+🔍 Status: {PASS/FAIL/PARTIAL}
+📊 Requirements: {N}/{M} covered
+🧪 Tests: {result}
+
+📌 Next Step: {recommendation}
+```
+
+---
 
 ## Output
-
-- **Report**: `.auto-claude/specs/{ID}-{slug}/qa_report.md`
-- **Updated Status**: `implementation_plan.json`
-- **Next Step**: User reviews the report. If satisfied, User manually updates status to `DONE` (or merges PR).
+- **QA Report**: `.auto-claude/specs/{ID}/qa_report.md`
+- **Updated Status**: `.auto-claude/specs/{ID}/implementation_plan.json`
