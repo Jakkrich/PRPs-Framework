@@ -1,0 +1,218 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+    :root {
+        /* Light Mode - Warm off-white tones */
+        --background: #F2F2ED;
+        --foreground: #0B0B0F;
+
+        --card: #FFFFFF;
+        --card-foreground: #0B0B0F;
+
+        --popover: #FFFFFF;
+        --popover-foreground: #0B0B0F;
+
+        --primary: #A5A66A;
+        --primary-foreground: #0B0B0F;
+
+        --secondary: #E8E8E3;
+        --secondary-foreground: #0B0B0F;
+
+        --muted: #EDEDE8;
+        --muted-foreground: #5C6974;
+
+        --accent: #EFEFE0;
+        --accent-foreground: #A5A66A;
+
+        --destructive: #D84F68;
+        --destructive-foreground: #FFFFFF;
+
+        --border: #DEDED9;
+        --input: #DEDED9;
+        --ring: #A5A66A;
+
+        --radius: 0.75rem;
+
+        --sidebar: #FFFFFF;
+        --sidebar-foreground: #0B0B0F;
+
+        --success: #4EBE96;
+        --success-foreground: #FFFFFF;
+        --success-light: #E0F5ED;
+
+        --warning: #D2D714;
+        --warning-foreground: #0B0B0F;
+        --warning-light: #F5F5D0;
+
+        --info: #479FFA;
+        --info-foreground: #FFFFFF;
+        --info-light: #E8F4FF;
+
+        --error: #D84F68;
+        --error-light: #FCE8EC;
+
+        /* Shadows - soft and diffused for light mode */
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.07), 0 2px 4px -2px rgba(0, 0, 0, 0.05);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.05);
+        --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.08), 0 8px 10px -6px rgba(0, 0, 0, 0.04);
+        --shadow-focus: 0 0 0 3px rgba(165, 166, 106, 0.2);
+
+        --radix-accordion-content-height: 0px;
+    }
+
+    .dark {
+        /* Dark Mode - Deep Blue / Navy (Lighter for visibility) */
+        --background: #172554;
+        /* Blue 950 */
+        --foreground: #f1f5f9;
+        /* Slate 100 */
+
+        --card: #1e3a8a;
+        /* Blue 900 */
+        --card-foreground: #f1f5f9;
+
+        --popover: #1e293b;
+        --popover-foreground: #f1f5f9;
+
+        --primary: #38bdf8;
+        /* Sky 400 - Vivid Blue/Cyan */
+        --primary-foreground: #0f172a;
+
+        --secondary: #334155;
+        /* Slate 700 */
+        --secondary-foreground: #f1f5f9;
+
+        --muted: #334155;
+        --muted-foreground: #94a3b8;
+        /* Slate 400 */
+
+        --accent: #1e293b;
+        --accent-foreground: #38bdf8;
+
+        --destructive: #ef4444;
+        /* Red 500 */
+        --destructive-foreground: #f1f5f9;
+
+        --border: #334155;
+        /* Slate 700 */
+        --input: #334155;
+        --ring: #38bdf8;
+
+        --sidebar: #020617;
+        /* Slate 950 (darker) */
+        --sidebar-foreground: #f8fafc;
+
+        --success: #10b981;
+        /* Emerald 500 */
+        --success-foreground: #ffffff;
+        --success-light: #064e3b;
+
+        --warning: #fbbf24;
+        /* Amber 400 */
+        --warning-foreground: #000000;
+        --warning-light: #451a03;
+
+        --info: #3b82f6;
+        /* Blue 500 */
+        --info-foreground: #ffffff;
+        --info-light: #1e3a8a;
+
+        --error: #ef4444;
+        --error-light: #450a0a;
+
+        /* Shadows - deeper for dark mode */
+        --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.6);
+        --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.7);
+        --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.8);
+        --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.9);
+        --shadow-focus: 0 0 0 2px rgba(56, 189, 248, 0.2);
+    }
+}
+
+@layer base {
+    * {
+        @apply border-border;
+    }
+
+    body {
+        @apply bg-background text-foreground;
+    }
+}
+
+/* Animations from Auto-Claude globals.css */
+@keyframes accordion-down {
+    from {
+        height: 0
+    }
+
+    to {
+        height: var(--radix-accordion-content-height)
+    }
+}
+
+@keyframes accordion-up {
+    from {
+        height: var(--radix-accordion-content-height)
+    }
+
+    to {
+        height: 0
+    }
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0
+    }
+
+    to {
+        opacity: 1
+    }
+}
+
+@keyframes slide-up {
+    from {
+        transform: translateY(8px);
+        opacity: 0
+    }
+
+    to {
+        transform: translateY(0);
+        opacity: 1
+    }
+}
+
+@keyframes scale-in {
+    from {
+        transform: scale(0.95);
+        opacity: 0
+    }
+
+    to {
+        transform: scale(1);
+        opacity: 1
+    }
+}
+
+.animate-accordion-down {
+    animation: accordion-down 0.2s ease-out;
+}
+
+.animate-accordion-up {
+    animation: accordion-up 0.2s ease-out;
+}
+
+.animate-fade-in {
+    animation: fade-in 0.25s cubic-bezier(0, 0, 0.2, 1);
+}
+
+.animate-slide-up {
+    animation: slide-up 0.25s cubic-bezier(0, 0, 0.2, 1);
+}
+
+.animate-scale-in {
+    animation: scale-in 0.2s cubic-bezier(0, 0, 0.2, 1);
+}
