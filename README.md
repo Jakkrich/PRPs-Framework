@@ -8,17 +8,25 @@ Framework นี้ถูกออกแบบมาเพื่อให้ก�
 
 ## 🚀 Quick Start (สำหรับผู้เริ่มต้น)
 
-### 1. การติดตั้ง (Integration)
+### ⚡ One-Command Setup (แนะนำ)
+```powershell
+python .cursor/scripts/onboarding.py
+```
+> คำสั่งเดียวจบ! สร้าง venv, ติดตั้ง dependencies, init-sync, และ health check ให้อัตโนมัติ
+
+### 📋 Manual Setup (ถ้าต้องการทำทีละขั้นตอน)
+
+#### 1. การติดตั้ง (Integration)
 ทีมพัฒนาสามารถนำ Framework นี้ไปใช้ในโปรเจกต์ของตนเองได้ง่ายๆ:
 - **Clone/Copy**: คัดลอกโฟลเดอร์ `PRPs-Framework/` และ `.cursor/` ไปวางไว้ที่ Root ของโปรเจกต์คุณ
 
-### 2. เตรียมสภาพแวดล้อม (Setup)
+#### 2. เตรียมสภาพแวดล้อม (Setup)
 รันคำสั่งเพื่อสร้าง Virtual Environment และติดตั้ง Tooling สำหรับ Agent:
 ```powershell
 python .cursor/scripts/setup-venv.py
 ```
 
-### 3. เบิกเนตร AI (Init Context)
+#### 3. เบิกเนตร AI (Init Context)
 รันคำสั่งแรกเพื่อให้ Agent รู้จักโครงสร้างโปรเจกต์ของคุณ:
 ```text
 /00-prp-init-context

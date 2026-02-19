@@ -15,11 +15,24 @@ Create an ISSUE spec directory and initial plan files for any kind of work item 
 ### Step 1: Execute Creation Script
 Run the script to scaffold the task folder structure:
 
+**Mode 1 — CLI Arguments (ภาษาอังกฤษ):**
 ```powershell
 python .cursor/scripts/create-task.py "{Title}" "{Description}"
 ```
 
-> ⚠️ **Encoding Warning**: หากคำอธิบาย (Description) เป็นภาษาไทย ให้ Agent ใช้ `write_to_file` หรือ `replace_file_content` เพื่ออัปเดตเนื้อหาภาษาไทยลงในไฟล์โดยตรง **ห้ามส่ง String ภาษาไทยผ่าน CLI Arguments** เพราะจะทำให้สระหายบน Windows
+**Mode 2 — File Input (แนะนำสำหรับภาษาไทย):**
+```powershell
+python .cursor/scripts/create-task.py --file task-input.json
+```
+โดย Agent ต้องสร้างไฟล์ `task-input.json` ก่อน (ใช้ `write_to_file`) ด้วย format:
+```json
+{
+  "title": "ชื่องานภาษาไทย",
+  "description": "คำอธิบายภาษาไทย"
+}
+```
+
+> ⚠️ **Encoding Warning**: หากคำอธิบาย (Description) เป็นภาษาไทย **ต้องใช้ `--file` mode** หรือใช้ `write_to_file` / `replace_file_content` เพื่ออัปเดตเนื้อหาภาษาไทยลงในไฟล์โดยตรง **ห้ามส่ง String ภาษาไทยผ่าน CLI Arguments** เพราะจะทำให้สระหายบน Windows
 
 **สคริปต์จะสร้าง:**
 - `.auto-claude/specs/{ID}-{slug}/`

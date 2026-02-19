@@ -1,49 +1,116 @@
 # Human Actions
-2: 
-3: Perform explicit human actions on a task, such as approving, rejecting, or providing feedback.
-4: 
-5: ## Usage
-6: 
-7: ```
-8: /10-Human [Action] {ID} [Message]
-9: ```
-10: 
-11: Example: `/10-Human Approve 003`
-12: Example: `/10-Human Reject 003 "Needs better error handling"`
-13: 
-14: ## Arguments
-15: 
-16: - **Action**:
-17:   - `Approve`: Mark task as DONE.
-18:   - `Reject`: Mark task as REJECTED (or move back to IN PROGRESS).
-19:   - `Review`: Mark task as REVIEW NEEDED.
-20:   - `Feedback`: Add a feedback note to the task.
-21: - **ID**: Task ID (e.g., `003`).
-22: - **Message**: Optional message or reason.
-23: 
-24: ## Process
-25: 
-26: 1.  **Analyze Action**
-27:     - Determine the target status based on the action.
-28: 
-29: 2.  **Update Artifacts**
-30:     - **Approve**:
-31:       - Run `python PRPs-Framework/apps/tools/json_executor.py set-status {plan_path} done`
-32:       - Status -> `DONE` (in `spec.md`)
-33:     - **Reject**:
-34:       - Run `python PRPs-Framework/apps/tools/json_executor.py set-status {plan_path} in_progress` (if fixing)
-35:       - Status -> `REJECTED` or `NEEDS WORK`
-36:       - Add rejection reason to `plan.md` or `spec.md`.
-37:     - **Review**:
-38:       - Run `python PRPs-Framework/apps/tools/json_executor.py set-status {plan_path} human_review`
-39:       - Status -> `REVIEW NEEDED`
-40:     - **Feedback**:
-41:       - Append feedback to `spec.md` or `plan.md`.
-42: 
-43: 3.  **Notify**
-44:     - Log the action and result.
-45: 
-46: ## Output
-47: 
-48: - **Updated Files**: `spec.md`, `implementation_plan.json`
-49:
+
+Perform explicit human actions on a task, such as approving, rejecting, or providing feedback.
+
+## Usage
+
+```
+/10-Human [Action] {ID} [Message]
+```
+
+Example: `/10-Human Approve 003`
+Example: `/10-Human Reject 003 "Needs better error handling"`
+Example: `/10-Human Feedback 003 "เพิ่ม validation สำหรับ email format ด้วย"`
+
+## Arguments
+
+- **Action**:
+  - `Approve`: Mark task as DONE ✅
+  - `Reject`: ส่งงานกลับไปแก้ไข → วนกลับเข้า `/03-Code` 🔄
+  - `Review`: Mark task as REVIEW NEEDED.
+  - `Feedback`: เพิ่ม feedback note → วนกลับเข้า `/03-Code` 🔄
+- **ID**: Task ID (e.g., `003`).
+- **Message**: เหตุผลหรือ feedback (บังคับสำหรับ Reject/Feedback)
+
+---
+
+## Process
+
+### Step 1: Locate Task
+ค้นหาโฟลเดอร์ `.auto-claude/specs/{ID}-*/` และอ่าน `implementation_plan.json`
+
+### Step 2: Execute Action
+
+#### ✅ Approve (Mark as DONE)
+```powershell
+python PRPs-Framework/apps/tools/json_executor.py set-status {plan_path} done
+```
+- Status → `done`
+- **End of lifecycle** — งานเสร็จสมบูรณ์
+
+#### 🔄 Reject (ส่งกลับแก้ไข)
+```powershell
+python PRPs-Framework/apps/tools/json_executor.py set-status {plan_path} in_progress
+```
+- Status → `in_progress`
+- **บันทึก Rejection** ใน `qa_report.md` ต่อท้ายหัวข้อ `## Rejection History`:
+  ```markdown
+  ## Rejection History
+  ### Round 1 — {Date}
+  - **Reviewer**: Human
+  - **Reason**: {Message}
+  - **Action Items**:
+    - [ ] {สิ่งที่ต้องแก้ 1}
+    - [ ] {สิ่งที่ต้องแก้ 2}
+  ```
+- **แนะนำ Next Step**: _"รัน `/03-Code {ID}` เพื่อแก้ไขตาม Feedback"_
+
+> ⚠️ **สำคัญ**: Agent ที่รัน `/03-Code` ครั้งถัดไปต้องอ่าน Rejection History ก่อน เพื่อแก้ปัญหาที่คนชี้ไว้
+
+#### 📝 Feedback (เพิ่ม Note แล้ววนกลับ)
+```powershell
+python PRPs-Framework/apps/tools/json_executor.py set-status {plan_path} in_progress
+```
+- Status → `in_progress`
+- **บันทึก Feedback** ใน `qa_report.md` ต่อท้ายหัวข้อ `## Feedback History`:
+  ```markdown
+  ## Feedback History
+  ### Round 1 — {Date}
+  - **From**: Human
+  - **Feedback**: {Message}
+  - **Action Items**:
+    - [ ] {สิ่งที่ต้องเพิ่ม/ปรับ}
+  ```
+- **แนะนำ Next Step**: _"รัน `/03-Code {ID}` เพื่อปรับปรุงตาม Feedback"_
+
+#### 👀 Review (ขอรีวิวเพิ่ม)
+```powershell
+python PRPs-Framework/apps/tools/json_executor.py set-status {plan_path} human_review
+```
+- Status → `human_review`
+- ใช้เมื่อต้องการให้คนอื่นมารีวิวเพิ่มเติม
+
+### Step 3: Notify
+แสดงสรุปให้ผู้ใช้:
+
+```
+📋 Human Action: {Action} on Task {ID}
+📌 Status: {new_status}
+📌 Next Step: {recommendation}
+```
+
+---
+
+## Workflow Diagram
+
+```
+/03-Code {ID}
+    ↓
+/04-Verify {ID} (QA Report + Manual Guide)
+    ↓
+Status: human_review
+    ↓
+Human ตรวจสอบตาม Manual Verification Guide
+    ↓
+    ├── /10-Human Approve {ID}  → ✅ Done (จบ)
+    ├── /10-Human Reject {ID}   → 🔄 in_progress → /03-Code (วนกลับ)
+    └── /10-Human Feedback {ID} → 🔄 in_progress → /03-Code (วนกลับ)
+```
+
+> **Reject/Feedback Loop**: จะวนไปเรื่อยๆ จนกว่าจะ Approve
+> ทุกรอบจะมี Round number เพิ่มขึ้น (Round 1, Round 2, ...)
+
+---
+
+## Output
+- **Updated Files**: `implementation_plan.json` (status), `qa_report.md` (rejection/feedback history)

@@ -1,0 +1,25 @@
+{
+  "sourceType": "manual",
+  "model": "opus",
+  "thinkingLevel": "high",
+  "isAutoProfile": true,
+  "phaseModels": {
+    "spec": "opus",
+    "planning": "opus",
+    "coding": "opus",
+    "qa": "opus"
+  },
+  "phaseThinking": {
+    "spec": "high",
+    "planning": "medium",
+    "coding": "low",
+    "qa": "low"
+  },
+  "requireReviewBeforeCoding": true,
+  "baseBranch": "main",
+  "fastMode": false,
+  "category": "refactor",
+  "priority": "medium",
+  "complexity": "low",
+  "impact": "medium"
+}

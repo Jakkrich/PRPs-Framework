@@ -1,0 +1,82 @@
+{
+  "feature": "005: Cleanup Commands 05-11",
+  "description": "ตรวจสอบคำสั่ง 05-11 ตัดสินใจ Keep/Remove แล้วลบ Skeleton commands ที่ไม่จำเป็น เพื่อลดความสับสนของ Dev ใหม่",
+  "created_at": "2026-02-19T12:00:12Z",
+  "updated_at": "2026-02-19T19:06:34.220295",
+  "status": "done",
+  "planStatus": "done",
+  "xstateState": "done",
+  "phases": [
+    {
+      "name": "Phase 1: Remove Skeleton Commands",
+      "description": "ลบคำสั่ง 05, 06, 07, 08, 09 ที่เป็น Skeleton ไม่มีเนื้อหาจริง",
+      "subtasks": [
+        {
+          "id": "1.1",
+          "description": "ลบไฟล์ 05-Roadmap.md, 06-Ideate.md, 07-Spec.md, 08-Manage.md, 09-Utils.md ออกจาก .cursor/commands/",
+          "status": "completed",
+          "files": [
+            ".cursor/commands/05-Roadmap.md",
+            ".cursor/commands/06-Ideate.md",
+            ".cursor/commands/07-Spec.md",
+            ".cursor/commands/08-Manage.md",
+            ".cursor/commands/09-Utils.md"
+          ],
+          "verification": "ตรวจว่า .cursor/commands/ เหลือเฉพาะ 00, 01, 02, 03, 04, 10, 11 และ prp-core/"
+        }
+      ]
+    },
+    {
+      "name": "Phase 2: Fix 11-Agent.md",
+      "description": "แก้ไข path ที่ผิดและอัปเดตรายชื่อ Agent ให้ตรงกับความจริง",
+      "subtasks": [
+        {
+          "id": "2.1",
+          "description": "แก้ path จาก .auto-claude/agents/ เป็น .cursor/agents/ ทั้งหมดใน 11-Agent.md และอัปเดตรายชื่อ Agent + เพิ่ม report output path ให้ตรง",
+          "status": "completed",
+          "files": [
+            ".cursor/commands/11-Agent.md"
+          ],
+          "verification": "ตรวจว่า path ทั้งหมดชี้ไป .cursor/agents/ และรายชื่อ Agent ตรงกับไฟล์จริง"
+        }
+      ]
+    },
+    {
+      "name": "Phase 3: Update Documentation",
+      "description": "อัปเดต README และ INITIAL.md ให้ตรงกับคำสั่งที่เหลืออยู่",
+      "subtasks": [
+        {
+          "id": "3.1",
+          "description": "อัปเดต Commands section ใน PRPs-Framework/README.md ให้แสดงเฉพาะคำสั่งที่มีอยู่จริง (00-04, 10, 11)",
+          "status": "completed",
+          "files": [
+            "PRPs-Framework/README.md"
+          ],
+          "verification": "ตรวจว่า README ไม่มีการอ้างอิงคำสั่ง 05-09"
+        },
+        {
+          "id": "3.2",
+          "description": "อัปเดต Coach Workflow ใน 00-Coach.md ให้แนะนำเฉพาะคำสั่งที่มีอยู่จริง (ไม่อ้างอิง 05-09)",
+          "status": "completed",
+          "files": [
+            ".cursor/commands/00-Coach.md"
+          ],
+          "verification": "ตรวจว่า Coach ไม่แนะนำคำสั่ง 05-09"
+        }
+      ]
+    },
+    {
+      "name": "Phase 4: Verification",
+      "description": "ตรวจสอบว่าไม่มีไฟล์ใดอ้างอิงคำสั่ง 05-09 ที่ถูกลบ",
+      "subtasks": [
+        {
+          "id": "4.1",
+          "description": "ค้นหาทั้ง Codebase ว่ามีการอ้างอิง 05-Roadmap, 06-Ideate, 07-Spec, 08-Manage, 09-Utils หลงเหลืออยู่หรือไม่ (grep search)",
+          "status": "completed",
+          "files": [],
+          "verification": "ไม่มีไฟล์ใดอ้างอิงคำสั่งที่ถูกลบ"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,4 @@
+{
+  "task_description": "Add --file input mode to create-task.py to prevent Thai character corruption on Windows CLI",
+  "workflow_type": "feature"
+}

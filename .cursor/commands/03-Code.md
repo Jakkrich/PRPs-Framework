@@ -26,6 +26,39 @@ Where `{ID}` is the numeric prefix of the task (e.g., `012`).
    - `implementation_plan.json` มี `phases` ที่ไม่ว่าง
    - `status` ไม่ใช่ `done` (ยังไม่เสร็จ)
    - ถ้า `status` ยังเป็น `pending` → ให้แนะนำผู้ใช้รัน `/02-Plan {ID}` ก่อน
+6. **Check for Rejection/Feedback** (Re-entry Detection):
+   - ตรวจว่ามีไฟล์ `qa_report.md` อยู่หรือไม่
+   - ถ้ามี → อ่าน `## Rejection History` หรือ `## Feedback History` เพื่อหา Action Items ที่ยังไม่ได้แก้
+   - ถ้ามี Action Items → **เข้าโหมด Fix Mode** (ดูด้านล่าง)
+   - ถ้าไม่มี → ทำ Subtask Loop ปกติ
+
+---
+
+### Step 0.5: Fix Mode (Reject/Feedback Re-entry) 🔄
+
+> ถูก Trigger เมื่อ `/03-Code` ตรวจพบว่ามี Rejection/Feedback History ใน `qa_report.md`
+
+เมื่อเข้า Fix Mode:
+1. **อ่าน Action Items** จาก `qa_report.md` (ส่วน Rejection/Feedback History)
+2. **แสดงสรุปให้ User**:
+   ```
+   🔄 Re-entry Mode: Task {ID} ถูก Reject/Feedback
+   📋 Action Items ที่ต้องแก้:
+     - [ ] Item 1
+     - [ ] Item 2
+   
+   🔧 เริ่มแก้ไขตาม Feedback...
+   ```
+3. **แก้ไขตาม Action Items** — Focus เฉพาะสิ่งที่คนชี้ไว้
+4. **อัปเดต Action Items** ใน `qa_report.md` ให้เป็น `[x]` เมื่อแก้เสร็จ
+5. **เสร็จแล้ว → Auto-trigger `/04-Verify {ID}`** (วนต่อ)
+
+```
+🔄 Feedback Loop:
+/03-Code → /04-Verify → Human Review
+    ↑                        ↓
+    └── Reject/Feedback ←────┘
+```
 
 ---
 

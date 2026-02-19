@@ -5,7 +5,7 @@ import json
 import re
 import argparse
 import subprocess
-from datetime import datetime
+from datetime import datetime, timezone
 from pathlib import Path
 
 # --- VENV BOOTSTRAP START ---
@@ -153,7 +153,7 @@ def create_task(title, description, project_root):
     print(f"Created task directory: {spec_dir}")
 
     # Create implementation_plan.json
-    now = datetime.utcnow().isoformat() + "Z"
+    now = datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
     plan = {
         "feature": f"{spec_number:03d}: {title}",
         "description": description,
@@ -166,7 +166,7 @@ def create_task(title, description, project_root):
     }
     
     with open(spec_dir / "implementation_plan.json", "w", encoding="utf-8") as f:
-        json.dump(plan, f, indent=2)
+        json.dump(plan, f, indent=2, ensure_ascii=False)
     
     # Create task_metadata.json with UI defaults
     metadata = {
@@ -195,7 +195,7 @@ def create_task(title, description, project_root):
         "impact": "medium"
     }
     with open(spec_dir / "task_metadata.json", "w", encoding="utf-8") as f:
-        json.dump(metadata, f, indent=2)
+        json.dump(metadata, f, indent=2, ensure_ascii=False)
 
     # Create requirements.json
     requirements = {
@@ -203,7 +203,7 @@ def create_task(title, description, project_root):
         "workflow_type": "feature"
     }
     with open(spec_dir / "requirements.json", "w", encoding="utf-8") as f:
-        json.dump(requirements, f, indent=2)
+        json.dump(requirements, f, indent=2, ensure_ascii=False)
 
     # Create spec.md (compatibility with existing workflows)
     spec_content = f"""# {spec_id}: {title}
@@ -241,25 +241,94 @@ def create_task(title, description, project_root):
     print(f"Task created successfully: {spec_id}")
     return spec_id
 
+def load_input_from_file(file_path):
+    """
+    Load task title and description from a UTF-8 JSON file.
+    This bypasses Windows CLI encoding issues with Thai/non-ASCII characters.
+
+    Expected JSON format:
+    {
+        "title": "Task title",
+        "description": "Task description (optional)"
+    }
+    """
+    path = Path(file_path)
+    if not path.exists():
+        print(f"Error: Input file not found: {file_path}")
+        sys.exit(1)
+
+    try:
+        with open(path, 'r', encoding='utf-8') as f:
+            data = json.load(f)
+    except json.JSONDecodeError as e:
+        print(f"Error: Invalid JSON in {file_path}: {e}")
+        sys.exit(1)
+    except UnicodeDecodeError as e:
+        print(f"Error: File encoding issue in {file_path}: {e}")
+        print("Hint: Ensure the file is saved as UTF-8.")
+        sys.exit(1)
+
+    if 'title' not in data or not data['title'].strip():
+        print("Error: JSON file must contain a non-empty 'title' field.")
+        print('Expected format: { "title": "...", "description": "..." }')
+        sys.exit(1)
+
+    title = data['title'].strip()
+    description = data.get('description', '').strip() or title
+    return title, description
+
+
 def main():
-    parser = argparse.ArgumentParser(description="Create a new task in .auto-claude/specs")
-    parser.add_argument("title", help="Title of the task")
+    parser = argparse.ArgumentParser(
+        description="Create a new task in .auto-claude/specs",
+        epilog=(
+            "Examples:\n"
+            "  %(prog)s \"Fix login bug\" \"Users cannot login with OAuth\"\n"
+            '  %(prog)s --file task-input.json\n'
+            "\n"
+            "For Thai/non-ASCII text, use --file mode to avoid encoding issues on Windows."
+        ),
+        formatter_class=argparse.RawDescriptionHelpFormatter
+    )
+
+    # Mode 1: CLI Arguments (positional)
+    parser.add_argument("title", nargs="?", default=None, help="Title of the task")
     parser.add_argument("description", nargs="?", default=None, help="Description of the task")
-    
+
+    # Mode 2: File Input (recommended for Thai/non-ASCII)
+    parser.add_argument(
+        "--file", "-f",
+        dest="input_file",
+        help="Path to a UTF-8 JSON file with 'title' and 'description' fields. "
+             "Recommended for Thai or non-ASCII text to avoid Windows CLI encoding issues."
+    )
+
     args = parser.parse_args()
 
-    # If description is missing, use title
-    description = args.description if args.description else args.title
-    
+    # Determine input source
+    if args.input_file:
+        # Mode 2: Read from file (preferred for Thai)
+        title, description = load_input_from_file(args.input_file)
+        print(f"[create-task] Reading input from file: {args.input_file}")
+    elif args.title:
+        # Mode 1: CLI Arguments (original behavior)
+        title = args.title
+        description = args.description if args.description else args.title
+    else:
+        parser.print_help()
+        print("\nError: Please provide a title or use --file option.")
+        sys.exit(1)
+
     project_root = find_project_root()
-    
+
     if not (project_root / ".auto-claude").exists():
         print("Error: Could not find project root (containing .auto-claude)")
         sys.exit(1)
 
-    spec_id = create_task(args.title, description, project_root)
+    spec_id = create_task(title, description, project_root)
     print(f"\n[create-task] Success! Created task: {spec_id}")
     print(f"[create-task] Path: {project_root / '.auto-claude' / 'specs' / spec_id}")
+
 
 if __name__ == "__main__":
     main()
