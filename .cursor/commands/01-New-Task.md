@@ -17,20 +17,29 @@ Run the script to scaffold the task folder structure:
 
 **Mode 1 — CLI Arguments (ภาษาอังกฤษ):**
 ```powershell
-python .cursor/scripts/create-task.py "{Title}" "{Description}"
+# หากอยู่ใน Submodule (เช่น Odoo Module) ให้ใช้ --root เพื่อระบุ Folder ของ Module นั้น
+python .cursor/scripts/create-task.py "{Title}" "{Description}" --root "./" 
 ```
 
 **Mode 2 — File Input (แนะนำสำหรับภาษาไทย):**
 ```powershell
-python .cursor/scripts/create-task.py --file task-input.json
+# หากอยู่ใน Submodule ให้ใช้ --root เพื่อระบุ Folder ของ Module นั้น
+python .cursor/scripts/create-task.py --file task-input.json --root "./"
 ```
-โดย Agent ต้องสร้างไฟล์ `task-input.json` ก่อน (ใช้ `write_to_file`) ด้วย format:
+โดย Agent ต้องสร้างไฟล์ `task-input.json` ในโฟลเดอร์ที่จะทำงานก่อน (ใช้ `write_to_file`) ด้วย format:
 ```json
 {
   "title": "ชื่องานภาษาไทย",
   "description": "คำอธิบายภาษาไทย"
 }
 ```
+
+### 🧠 Submodule Awareness (CRITICAL)
+หากโปรเจกต์เป็นแบบ Multi-Module (เช่น Odoo) และงานนี้เกี่ยวข้องกับ Module ใด Module หนึ่งเป็นการเฉพาะ:
+1. **Detect Submodule**: ตรวจสอบว่าไฟล์ที่กำลังแก้อยู่ หรือส่วนที่เกี่ยวข้องกับ Task นี้ อยู่ใน Submodule หรือไม่ (เช่น `extra-addons/my_module/`)
+2. **Set Root**: ใช้ flag `--root` ไปที่โฟลเดอร์ของ Module นั้น เพื่อให้ `.auto-claude` ถูกสร้างแยกเก็บไว้ใน Module นั้นโดยเฉพาะ
+3. **Initialize if needed**: หาก Module นั้นยังไม่มี `.auto-claude` สคริปต์จะสร้างให้ใหม่เองโดยอัตโนมัติ และจะเพิ่ม `.auto-claude/` ลงใน `.gitignore` ของ Module นั้นให้ด้วยถ้ายังไม่มี
+
 
 > ⚠️ **Encoding Warning**: หากคำอธิบาย (Description) เป็นภาษาไทย **ต้องใช้ `--file` mode** หรือใช้ `write_to_file` / `replace_file_content` เพื่ออัปเดตเนื้อหาภาษาไทยลงในไฟล์โดยตรง **ห้ามส่ง String ภาษาไทยผ่าน CLI Arguments** เพราะจะทำให้สระหายบน Windows
 

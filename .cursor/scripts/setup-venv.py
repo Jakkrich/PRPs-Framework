@@ -4,26 +4,21 @@ import subprocess
 from pathlib import Path
 from datetime import datetime
 
-def find_project_root():
-    current_dir = Path.cwd()
-    root = current_dir
-    while not (root / ".auto-claude").exists() and root.parent != root:
-        root = root.parent
-    if (root / ".auto-claude").exists():
-        return root
+def get_framework_root():
+    """
+    Locates the shared framework root (where PRPs-Framework and .cursor live).
+    """
     script_path = Path(__file__).resolve()
-    root = script_path.parent.parent.parent
-    if (root / ".auto-claude").exists():
-        return root
-    return current_dir
+    # .cursor/scripts/setup-venv.py -> .cursor/scripts -> .cursor -> root
+    return script_path.parent.parent.parent
 
 def setup_venv():
-    project_root = find_project_root()
-    venv_dir = project_root / ".cursor" / ".venv"
+    framework_root = get_framework_root()
+    venv_dir = framework_root / ".cursor" / ".venv"
     
     # Check if already installed
     if (venv_dir / "installed.flag").exists():
-        print(f"[setup-venv] Project venv already exists and is initialized.")
+        # print(f"[setup-venv] Framework venv already exists at {venv_dir}")
         return
 
     print(f"[setup-venv] Virtual environment not found or uninitialized at {venv_dir}")
@@ -48,7 +43,7 @@ def setup_venv():
     try:
         subprocess.check_call([str(python_exe), "-m", "pip", "install", "--upgrade", "pip"])
         
-        req_file = project_root / "PRPs-Framework" / "apps" / "backend" / "requirements.txt"
+        req_file = framework_root / "PRPs-Framework" / "apps" / "backend" / "requirements.txt"
         if req_file.exists():
             subprocess.check_call([str(pip_exe), "install", "-r", str(req_file)])
             

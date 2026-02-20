@@ -26,14 +26,23 @@
 **Windows (PowerShell):**
 ```powershell
 python .cursor\scripts\setup-venv.py
-.cursor\.venv\Scripts\python.exe PRPs-Framework\apps\extensions\update_initial.py .
+# ใช้ path ของ submodule แทน . หากต้องการ init เฉพาะ module
+.cursor\.venv\Scripts\python.exe PRPs-Framework\apps\extensions\update_initial.py "./"
 ```
 
 **Linux / Mac / WSL:**
 ```bash
 python3 .cursor/scripts/setup-venv.py
-.cursor/.venv/bin/python PRPs-Framework/apps/extensions/update_initial.py .
+# ใช้ path ของ submodule แทน . หากต้องการ init เฉพาะ module
+.cursor/.venv/bin/python PRPs-Framework/apps/extensions/update_initial.py "./"
 ```
+
+### 🧠 Submodule Aware Sync
+หากต้องการ Sync เฉพาะ Module (เช่น Odoo Module):
+1. **Identify Target**: ดูว่าไฟล์ที่เปิดอยู่หรือโฟลเดอร์ที่ต้องการทำงานคืออะไร
+2. **Execute in Target**: รันสคริปต์โดยเปลี่ยน `./` เป็น path ของ Module นั้น
+3. **Outcome**: ระบบจะสร้าง/อัปเดต `INITIAL.md` และ `.auto-claude-security.json` ไว้ใน Module นั้นแยกจาก Root
+
 
 *(ระบบจะข้ามการติดตั้งหากพบว่า `installed.flag` มีอยู่แล้ว เพื่อความรวดเร็ว)*
 

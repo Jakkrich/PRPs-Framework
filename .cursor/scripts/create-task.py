@@ -9,27 +9,39 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 # --- VENV BOOTSTRAP START ---
-def find_project_root():
+def get_framework_root():
     """
-    Locates the project root by looking for .auto-claude or following the script path.
+    Locates the shared framework root (where PRPs-Framework and .cursor live).
+    This is based on the script's location: .cursor/scripts/create-task.py
+    So framework root is script.parent.parent.parent
     """
-    # 1. Try from CWD
-    current_dir = Path.cwd()
-    root = current_dir
-    while not (root / ".auto-claude").exists() and root.parent != root:
-        root = root.parent
-    
-    if (root / ".auto-claude").exists():
-        return root
-
-    # 2. Try from script path
     script_path = Path(__file__).resolve()
     # .cursor/scripts/create-task.py -> .cursor/scripts -> .cursor -> root
-    root = script_path.parent.parent.parent
-    if (root / ".auto-claude").exists():
-        return root
+    return script_path.parent.parent.parent
 
-    # Fallback to current directory if not found (though this usually means an error later)
+def find_project_root(target_path=None):
+    """
+    Locates the project root where the task should be created.
+    
+    Logic:
+    1. If target_path is provided, use that.
+    2. Try from CWD:
+       - If .auto-claude exists in CWD, return CWD.
+       - Do NOT walk up automatically to avoid accidentally picking the shared root
+         when inside a submodule that hasn't been initialized yet.
+    3. Fallback: Return CWD (will be initialized there).
+    """
+    if target_path:
+        return Path(target_path).resolve()
+
+    current_dir = Path.cwd()
+    
+    # Priority: Check if we are already in a "project" (has .auto-claude)
+    if (current_dir / ".auto-claude").exists():
+        return current_dir
+        
+    # Standard behavior: Use current directory as the target project root
+    # This allows users to cd into a module and have it be the root
     return current_dir
 
 def ensure_venv_and_restart():
@@ -39,9 +51,9 @@ def ensure_venv_and_restart():
     and restarts the script using the venv's python executable.
     """
     
-    # 1. Detect project root and venv path
-    project_root = find_project_root()
-    venv_dir = project_root / ".cursor" / ".venv"
+    # 1. Detect framework root (where .venv and PRPs-Framework live)
+    framework_root = get_framework_root()
+    venv_dir = framework_root / ".cursor" / ".venv"
     
     # 2. Check if already in venv
     # sys.prefix vs sys.base_prefix is the standard check
@@ -77,7 +89,7 @@ def ensure_venv_and_restart():
         except subprocess.CalledProcessError:
             print("[create-task] Warning: Failed to upgrade pip.")
 
-        requirements_file = project_root / "PRPs-Framework" / "apps" / "backend" / "requirements.txt"
+        requirements_file = framework_root / "PRPs-Framework" / "apps" / "backend" / "requirements.txt"
         if requirements_file.exists():
             print(f"[create-task] Installing dependencies from {requirements_file}...")
             try:
@@ -95,7 +107,7 @@ def ensure_venv_and_restart():
          print(f"[create-task] Error: Python executable not found at {python_exe}")
          sys.exit(1)
 
-    print(f"[create-task] Restarting script in venv: {venv_dir}")
+    # print(f"[create-task] Restarting script in venv: {venv_dir}")
     args = [str(python_exe), __file__] + sys.argv[1:]
     
     try:
@@ -238,6 +250,18 @@ def create_task(title, description, project_root):
     with open(spec_dir / "spec.md", "w", encoding="utf-8") as f:
         f.write(spec_content)
 
+    # Initializing gitignore if it doesn't exist to exclude .auto-claude
+    # This is a safe safeguard for new modules
+    gitignore = project_root / ".gitignore"
+    if not gitignore.exists():
+        with open(gitignore, "w", encoding="utf-8") as f:
+            f.write(".auto-claude/\n")
+    else:
+        content = gitignore.read_text(encoding="utf-8")
+        if ".auto-claude/" not in content:
+            with open(gitignore, "a", encoding="utf-8") as f:
+                f.write("\n.auto-claude/\n")
+
     print(f"Task created successfully: {spec_id}")
     return spec_id
 
@@ -302,6 +326,14 @@ def main():
         help="Path to a UTF-8 JSON file with 'title' and 'description' fields. "
              "Recommended for Thai or non-ASCII text to avoid Windows CLI encoding issues."
     )
+    
+    # Mode 3: Specific Target Root (for shared framework structure)
+    parser.add_argument(
+        "--root", "-r",
+        dest="target_root",
+        help="Path to the module/project root where .auto-claude should be created. "
+             "Use this to force creating tasks in a submodule instead of the workspace root."
+    )
 
     args = parser.parse_args()
 
@@ -319,12 +351,16 @@ def main():
         print("\nError: Please provide a title or use --file option.")
         sys.exit(1)
 
-    project_root = find_project_root()
-
-    if not (project_root / ".auto-claude").exists():
-        print("Error: Could not find project root (containing .auto-claude)")
+    # Use the target root if provided, otherwise detect from CWD
+    project_root = find_project_root(args.target_root)
+    
+    # Ensure directory exists if user passed a path that doesn't exist
+    if not project_root.exists():
+        print(f"Error: Target root does not exist: {project_root}")
         sys.exit(1)
 
+    # We do NOT error check if .auto-claude exists here, we will create it inside create_task if needed
+    
     spec_id = create_task(title, description, project_root)
     print(f"\n[create-task] Success! Created task: {spec_id}")
     print(f"[create-task] Path: {project_root / '.auto-claude' / 'specs' / spec_id}")
