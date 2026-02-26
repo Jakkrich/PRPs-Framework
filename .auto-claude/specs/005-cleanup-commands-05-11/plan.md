@@ -21,7 +21,7 @@
 
 ```
 .cursor/commands/
-  ├── 00-Coach.md          ← Mentor & Advisor (Read-Only)
+  ├── 99-Coach.md          ← Mentor & Advisor (Read-Only)
   ├── 01-New-Task.md       ← สร้าง Task ใหม่
   ├── 02-Plan.md           ← วางแผน Implementation
   ├── 03-Code.md           ← Implement Code

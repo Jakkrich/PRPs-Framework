@@ -15,19 +15,17 @@
 .auto-claude-security.json
 
 # ------------------------------
-# 2. ARTIFACTS (KEEP THESE!)
+# 2. ARTIFACTS (IGNORED BUT KEEP STRUCTURE)
 # ------------------------------
-# We want to track Plans, Specs, and Reports
-# Do NOT uncomment these lines unless you want to ignore them
-# .auto-claude/plans/
-# .auto-claude/specs/
-# .auto-claude/reports/
+.auto-claude/issues/*
+!.auto-claude/issues/.gitkeep
+.auto-claude/specs/*
+!.auto-claude/specs/.gitkeep
 
 # ------------------------------
 # 3. BACKEND & TOOLS
 # ------------------------------
 # Python Virtual Environments
-PRPs-Framework/apps/backend/venv/
 venv/
 .venv/
 env/
@@ -69,3 +67,15 @@ Desktop.ini
 # Keep folder structure but ignore content inside sensitive/messy notes
 PRPs-Framework/_notes/*
 !PRPs-Framework/_notes/.gitkeep
+
+# ------------------------------
+# 7. Environment Variables
+# ------------------------------
+**.env
+
+# ------------------------------
+# 8. Template HTML & App code .cursor\PRPs\extension ยกเว้น .vsix ที่ upload
+# ------------------------------
+template-html/*
+.cursor/PRPs/extension/*
+!.cursor/PRPs/extension/*.vsix

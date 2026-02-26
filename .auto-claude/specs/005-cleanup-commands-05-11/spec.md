@@ -8,7 +8,7 @@
 - **Commit Pattern**: refactor: cleanup and consolidate commands 05-11
 
 ## Context
-- **Core Workflow ที่พร้อมใช้แล้ว**: `00-Coach`, `01-New-Task`, `02-Plan`, `03-Code`, `04-Verify`
+- **Core Workflow ที่พร้อมใช้แล้ว**: `99-Coach`, `01-New-Task`, `02-Plan`, `03-Code`, `04-Verify`
 - **คำสั่ง 05-11 ปัจจุบัน**: เป็น Skeleton (โครง) ที่มีเพียง Usage + Process คร่าวๆ ยังไม่มี AI Agent Instructions หรือ Encoding Protection เหมือนคำสั่ง 00-04
 - **Agent Files**: มี 12 agents ใน `.cursor/agents/` ที่ `11-Agent` อ้างอิง
 

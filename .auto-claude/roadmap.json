@@ -1,0 +1,169 @@
+{
+  "id": "roadmap-202602261200",
+  "project_name": "prp-auto-dev",
+  "version": "1.0",
+  "vision": "Framework สำหรับการทำ Context Engineering และ Agent-based Development เพื่อช่วยให้ SA/BA และ DEV ทำงานร่วมกับ AI ได้อย่างเป็นระบบ",
+  "target_audience": {
+    "primary": "Software Architects (SA) & Business Analysts (BA)",
+    "secondary": ["Developers", "AI Agents", "Project Managers"]
+  },
+  "phases": [
+    {
+      "id": "phase-1",
+      "name": "Foundation (MVP)",
+      "description": "สร้างโครงสร้างพื้นฐานและ Core Workflow สำหรับการทำงานแบบ Agentic",
+      "order": 1,
+      "status": "in-progress",
+      "features": ["feat-core-workflow", "feat-context-sync", "feat-onboarding-script"],
+      "milestones": [
+        {
+          "id": "ms-1-1",
+          "title": "Core Workflow Ready",
+          "description": "สามารถรัน 4-Step Cycle (Init-Task-Plan-Code) ได้สมบูรณ์",
+          "features": ["feat-core-workflow", "feat-context-sync"],
+          "status": "completed"
+        }
+      ]
+    },
+    {
+      "id": "phase-2",
+      "name": "Strategic & Quality Enhancements",
+      "description": "เพิ่มความสามารถในการวิเคราะห์เชิงกลยุทธ์ การตรวจสอบคุณภาพ และการติดตามสถานะ",
+      "order": 2,
+      "status": "planned",
+      "features": ["feat-prd-gen", "feat-debug-tool", "feat-kanban-dashboard"],
+      "milestones": [
+        {
+          "id": "ms-2-1",
+          "title": "Visual Tracking",
+          "description": "มี Dashboard สำหรับติดตามสถานะงานแบบ Kanban",
+          "features": ["feat-kanban-dashboard"],
+          "status": "planned"
+        }
+      ]
+    },
+    {
+      "id": "phase-3",
+      "name": "Scale & Intelligence",
+      "description": "ขยายขีดความสามารถด้วยระบบ Skills และการทำงานแบบ Multi-agent",
+      "order": 3,
+      "status": "planned",
+      "features": ["feat-skill-system", "feat-multi-agent-collab"],
+      "milestones": [
+        {
+          "id": "ms-3-1",
+          "title": "Domain Expertise",
+          "description": "รองรับการโหลด Skill เฉพาะทาง (เช่น Odoo, FastAPI) อย่างสมบูรณ์",
+          "features": ["feat-skill-system"],
+          "status": "planned"
+        }
+      ]
+    }
+  ],
+  "features": [
+    {
+      "id": "feat-core-workflow",
+      "title": "Standard PRP 4-Step Cycle",
+      "description": "ระบบคำสั่ง /01-Task ถึง /04-Verify เพื่อควบคุมขั้นตอนการพัฒนา",
+      "rationale": "เพื่อให้การทำงานของ AI มีขั้นตอนที่คาดเดาได้และตรวจสอบได้ (Standardization)",
+      "priority": "must",
+      "complexity": "medium",
+      "impact": "high",
+      "phase_id": "phase-1",
+      "dependencies": [],
+      "status": "completed",
+      "acceptance_criteria": [
+        "ทุกคำสั่งมีไฟล์ Markdown อธิบายวิธีการทำงานใน .cursor/commands/",
+        "Agent สามารถรันคำสั่งเหล่านี้ตามลำดับได้โดยไม่สับสน"
+      ],
+      "user_stories": [
+        "ในฐานะ SA ผมต้องการให้ AI มีขั้นตอนการทำงานที่ชัดเจน เพื่อลดความผิดพลาดในการสื่อสาร"
+      ],
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feat-context-sync",
+      "title": "Auto-Sync Project Context (INITIAL.md)",
+      "description": "ระบบอัปเดตสารบัญโครงการและสถานะงานอัตโนมัติผ่านคำสั่ง /00-Init",
+      "rationale": "AI ต้องมี 'Source of Truth' ที่เป็นปัจจุบันเพื่อลดการใช้ Token และความผิดพลาดจากการลืมบริบท",
+      "priority": "must",
+      "complexity": "low",
+      "impact": "high",
+      "phase_id": "phase-1",
+      "dependencies": [],
+      "status": "completed",
+      "acceptance_criteria": [
+        "คำสั่ง /00-Init สามารถสแกนโฟลเดอร์ .auto-claude/ และอัปเดต INITIAL.md ได้ถูกต้อง"
+      ],
+      "user_stories": [
+        "ในฐานะ Developer ผมต้องการให้ AI รู้จักโครงสร้างไฟล์ล่าสุดเสมอ โดยไม่ต้องมาสแกนใหม่ทุกครั้ง"
+      ],
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feat-prd-gen",
+      "title": "Hypothesis-Driven PRD Generator (/05-PRD)",
+      "description": "สร้างเอกสารความต้องการระบบที่เน้นการทดสอบสมมติฐานและการแก้ปัญหาผู้ใช้",
+      "rationale": "ช่วยให้ BA/SA วางแผนฟีเจอร์ใหม่ได้อย่างเป็นระบบและสอดคล้องกับ Vision",
+      "priority": "should",
+      "complexity": "medium",
+      "impact": "high",
+      "phase_id": "phase-2",
+      "dependencies": ["feat-core-workflow"],
+      "status": "idea",
+      "acceptance_criteria": [
+        "คำสั่ง /05-PRD สร้างไฟล์ .md ที่มีโครงสร้าง Pain Points, Solutions, และ Success Metrics"
+      ],
+      "user_stories": [
+        "ในฐานะ BA ผมต้องการให้ AI ช่วยร่าง PRD เบื้องต้นจากไอเดียคร่าวๆ ของผม"
+      ],
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feat-kanban-dashboard",
+      "title": "PRP Kanban Dashboard",
+      "description": "หน้าจอ GUI (HTML/Electron) สำหรับแสดงสถานะ Specs และ Issues ในรูปแบบ Kanban Board",
+      "rationale": "การมองเห็นสถานะงาน (Visibility) ช่วยให้การบริหารจัดการโครงการทำได้ง่ายขึ้น",
+      "priority": "should",
+      "complexity": "high",
+      "impact": "medium",
+      "phase_id": "phase-2",
+      "dependencies": ["feat-context-sync"],
+      "status": "in-progress",
+      "acceptance_criteria": [
+        "Dashboard แสดงผลข้อมูลจาก .auto-claude/ ได้แบบ Real-time",
+        "สามารถลากวาง (Drag & Drop) เพื่อเปลี่ยนสถานะงานได้"
+      ],
+      "user_stories": [
+        "ในฐานะ PM ผมต้องการเห็นภาพรวมว่างานไหนกำลังทำ (Doing) หรืองานไหนเสร็จแล้ว (Done)"
+      ],
+      "competitor_insight_ids": []
+    },
+    {
+      "id": "feat-skill-system",
+      "title": "Modular Agent Skill System",
+      "description": "ระบบที่ช่วยให้ Agent โหลดความรู้เฉพาะทางจาก SKILL.md ตามเทคโนโลยีที่ใช้",
+      "rationale": "Agent ตัวเดียวไม่สามารถเก่งทุกอย่างได้ การแยก Skill ทำให้การทำงานมีความแม่นยำสูงขึ้น",
+      "priority": "could",
+      "complexity": "high",
+      "impact": "high",
+      "phase_id": "phase-3",
+      "dependencies": ["feat-core-workflow"],
+      "status": "planned",
+      "acceptance_criteria": [
+        "ระบบสามารถโหลดกฎ (Rules) จาก .cursor/skills/ ได้ตาม Stack ที่ตรวจพบ"
+      ],
+      "user_stories": [
+        "ในฐานะ Lead Dev ผมต้องการให้ AI ใช้มาตรฐานการเขียนโค้ดที่ถูกต้องตาม Framework ที่เราเลือก"
+      ],
+      "competitor_insight_ids": []
+    }
+  ],
+  "metadata": {
+    "created_at": "2026-02-26T12:00:00Z",
+    "updated_at": "2026-02-26T12:00:00Z",
+    "generated_by": "Gemini CLI Agent (PRP-Core)",
+    "prioritization_framework": "MoSCoW",
+    "competitor_analysis_used": false
+  }
+}

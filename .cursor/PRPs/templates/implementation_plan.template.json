@@ -1,0 +1,33 @@
+{
+    "feature": "{ID}: {Title}",
+    "description": "{Description}",
+    "workflow_type": "standard",
+    "status": "in_progress",
+    "planStatus": "planning",
+    "xstateState": "planning",
+    "created_at": "{ISO_TIMESTAMP}",
+    "updated_at": "{ISO_TIMESTAMP}",
+    "spec_file": ".auto-claude/specs/{ID}-{slug}/spec.md",
+    "phases": [
+        {
+            "phase": 1,
+            "name": "Example Phase",
+            "type": "logic",
+            "subtasks": [
+                {
+                    "id": "1.1",
+                    "description": "Example Subtask",
+                    "status": "pending",
+                    "verification": {
+                        "type": "command",
+                        "run": "npm test"
+                    }
+                }
+            ]
+        }
+    ],
+    "final_acceptance": [
+        "Criteria 1",
+        "Criteria 2"
+    ]
+}

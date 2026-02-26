@@ -29,56 +29,40 @@ Example: `/10-Human Feedback 003 "เพิ่ม validation สำหรับ 
 ### Step 1: Locate Task
 ค้นหาโฟลเดอร์ `.auto-claude/specs/{ID}-*/` และอ่าน `implementation_plan.json`
 
-### Step 2: Execute Action
+### Step 2: Execute Action (PURE AGENTIC)
+
+ให้ Agent ใช้เครื่องมือ `replace_file_content` เพื่อปรับเปลี่ยน `status` ใน `implementation_plan.json` ตามคำสั่งที่ได้รับ:
 
 #### ✅ Approve (Mark as DONE)
-```powershell
-python PRPs-Framework/apps/tools/json_executor.py set-status {plan_path} done
-```
-- Status → `done`
+- **Update status**: เปลี่ยน `"status": "..."` เป็น `"status": "done"` และ `"xstateState": "done"`
+- **บันทึกบทเรียน**: หากงานนี้มีเทคนิคหรือโครงสร้างที่เป็นต้นแบบที่ดี ให้เพิ่มบันทึกลงใน `.auto-claude/lessons.md` เป็น Best Practice
 - **End of lifecycle** — งานเสร็จสมบูรณ์
 
 #### 🔄 Reject (ส่งกลับแก้ไข)
-```powershell
-python PRPs-Framework/apps/tools/json_executor.py set-status {plan_path} in_progress
-```
-- Status → `in_progress`
+- **Update status**: เปลี่ยนสถานะกลับเป็น `"status": "in_progress"`
 - **บันทึก Rejection** ใน `qa_report.md` ต่อท้ายหัวข้อ `## Rejection History`:
   ```markdown
   ## Rejection History
-  ### Round 1 — {Date}
+  ### Round {N} — {Date}
   - **Reviewer**: Human
   - **Reason**: {Message}
   - **Action Items**:
-    - [ ] {สิ่งที่ต้องแก้ 1}
-    - [ ] {สิ่งที่ต้องแก้ 2}
+    - [ ] {สิ่งที่ต้องแก้จาก Message}
   ```
 - **แนะนำ Next Step**: _"รัน `/03-Code {ID}` เพื่อแก้ไขตาม Feedback"_
-
-> ⚠️ **สำคัญ**: Agent ที่รัน `/03-Code` ครั้งถัดไปต้องอ่าน Rejection History ก่อน เพื่อแก้ปัญหาที่คนชี้ไว้
+- **บันทึกบทเรียน**: เพิ่มบันทึกข้อผิดพลาดและสิ่งที่ต้องแก้ไขลงใน `.auto-claude/lessons.md` เพื่อไม่ให้เกิดบั๊กซ้ำเดิมในงานถัดไป
 
 #### 📝 Feedback (เพิ่ม Note แล้ววนกลับ)
-```powershell
-python PRPs-Framework/apps/tools/json_executor.py set-status {plan_path} in_progress
-```
-- Status → `in_progress`
+- **Update status**: เปลี่ยนสถานะกลับเป็น `"status": "in_progress"`
 - **บันทึก Feedback** ใน `qa_report.md` ต่อท้ายหัวข้อ `## Feedback History`:
   ```markdown
   ## Feedback History
-  ### Round 1 — {Date}
+  ### Round {N} — {Date}
   - **From**: Human
   - **Feedback**: {Message}
-  - **Action Items**:
-    - [ ] {สิ่งที่ต้องเพิ่ม/ปรับ}
   ```
 - **แนะนำ Next Step**: _"รัน `/03-Code {ID}` เพื่อปรับปรุงตาม Feedback"_
-
-#### 👀 Review (ขอรีวิวเพิ่ม)
-```powershell
-python PRPs-Framework/apps/tools/json_executor.py set-status {plan_path} human_review
-```
-- Status → `human_review`
-- ใช้เมื่อต้องการให้คนอื่นมารีวิวเพิ่มเติม
+- **บันทึกบทเรียน (Optional)**: หาก Feedback นั้นเป็นกฎหรือสไตล์ที่ควรจำถาวร ให้เพิ่มบันทึกลงใน `.auto-claude/lessons.md` ตาม Template
 
 ### Step 3: Notify
 แสดงสรุปให้ผู้ใช้:

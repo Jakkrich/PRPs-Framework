@@ -56,10 +56,10 @@
         },
         {
           "id": "3.2",
-          "description": "อัปเดต Coach Workflow ใน 00-Coach.md ให้แนะนำเฉพาะคำสั่งที่มีอยู่จริง (ไม่อ้างอิง 05-09)",
+          "description": "อัปเดต Coach Workflow ใน 99-Coach.md ให้แนะนำเฉพาะคำสั่งที่มีอยู่จริง (ไม่อ้างอิง 05-09)",
           "status": "completed",
           "files": [
-            ".cursor/commands/00-Coach.md"
+            ".cursor/commands/99-Coach.md"
           ],
           "verification": "ตรวจว่า Coach ไม่แนะนำคำสั่ง 05-09"
         }

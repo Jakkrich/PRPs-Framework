@@ -1,0 +1,48 @@
+# 🧠 PRPs Framework - Core Rules
+
+## 📁 Multi-Project Support (Workspace Awareness)
+- **Active Project Path**: AI MUST check `INITIAL.md` for the `Active Project` field before performing any task.
+- **Path Resolution**: 
+  - All commands (/01-Task, /02-Plan, etc.) MUST use the `Active Project` path as their base for reading/writing specs and logs.
+  - If `Active Project` is set to `./`, use the root `.auto-claude/`.
+  - If working in a sub-module (e.g., Odoo module), the path should point to the folder containing its own `.auto-claude/`.
+- **Context Awareness**: If `@module` is not specified in `/00-Init`, AI should attempt to detect the module based on the currently opened file.
+
+## 🔄 Workflow Commands
+Always refer to these commands for project management:
+- `/00-Init [@module]`: Sync project context. If `@module` is provided, set it as the `Active Project` in `INITIAL.md`.
+- `/01-Task`: Create new task folder and `spec.md` in the `Active Project`.
+- `/02-Plan`: Analyze code and create plan relative to the `Active Project`.
+- `/03-Code`: Implement changes based on plan.
+- `/04-Verify`: QA and verification.
+- `/05-PRD`: Generate PRD.
+- `/06-Debug`: Root cause analysis.
+- `/07-Commit`: Git commit with standard message.
+- `/08-PR`: Generate Pull Request summary.
+- `/09-Research`: Code exploration.
+- `/99-Coach`: Consult guidelines.
+
+## 📁 Project Structure
+- `.auto-claude/`: Project state and tasks.
+  - `specs/`: Active and completed tasks.
+  - `issues/`: Staging for new issues.
+- `.cursor/`: AI configuration and scripts.
+  - `commands/`: Markdown files defining /commands.
+  - `rules-templates/`: Templates for `.cursorrules`.
+- `INITIAL.md`: Source of truth for project context.
+
+## 🎨 General Code Style
+- **TypeScript** over JavaScript.
+- **Functional programming** over OOP where possible.
+- **CamelCase** for variables, **UPPER_SNAKE_CASE** for constants.
+- **2 spaces** indentation.
+- **Single quotes** for strings.
+
+## 🔒 Security & Standards
+- Use `.env` for secrets.
+- Validate inputs using Zod/Yup.
+- Follow DRY and SOLID principles.
+
+## 🧪 Testing
+- Always include tests for new features.
+- Follow the plan and verify steps.

@@ -60,7 +60,7 @@
    - [ ] ❌ ไม่มี `07-Spec.md`
    - [ ] ❌ ไม่มี `08-Manage.md`
    - [ ] ❌ ไม่มี `09-Utils.md`
-   - [ ] ✅ มี `00-Coach.md`, `01-New-Task.md`, `02-Plan.md`, `03-Code.md`, `04-Verify.md`
+   - [ ] ✅ มี `99-Coach.md`, `01-New-Task.md`, `02-Plan.md`, `03-Code.md`, `04-Verify.md`
    - [ ] ✅ มี `10-Human.md`, `11-Agent.md`
 
 ### Test 2: ตรวจ 11-Agent.md path ถูกต้อง

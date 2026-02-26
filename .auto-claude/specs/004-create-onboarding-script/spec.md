@@ -10,7 +10,7 @@
 ## Context
 - **ปัจจุบัน**: Dev ใหม่ต้องรันหลายคำสั่ง: `setup-venv.py` → `init-sync` → อ่าน README → ทดลองสร้าง Task
 - **มีสคริปต์แยกอยู่แล้ว**: `setup-venv.py`, `update_initial.py`, `create-task.py`
-- **Coach (`/00-Coach`)**: มี Health Check อยู่แล้ว แต่ต้องรันแยก
+- **Coach (`/99-Coach`)**: มี Health Check อยู่แล้ว แต่ต้องรันแยก
 - **Prerequisites**: Python 3.8+, Git
 
 ## Problem / Goal
@@ -50,7 +50,7 @@
 ## Related Files
 - `.cursor/scripts/setup-venv.py` — สคริปต์สร้าง venv (จะถูกเรียกภายใน)
 - `PRPs-Framework/apps/extensions/update_initial.py` — สคริปต์ init-sync
-- `.cursor/commands/00-Coach.md` — Health Check reference
+- `.cursor/commands/99-Coach.md` — Health Check reference
 - `PRPs-Framework/README.md` — ต้องเพิ่ม Quick Start section
 
 ## Related PRPs (if known)

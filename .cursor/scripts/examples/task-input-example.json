@@ -1,4 +1,0 @@
-{
-    "title": "ตัวอย่าง: สร้างระบบ Authentication",
-    "description": "เพิ่มระบบล็อกอินด้วย OAuth 2.0 รองรับ Google และ GitHub Provider พร้อม Session Management"
-}

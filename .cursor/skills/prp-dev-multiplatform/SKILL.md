@@ -1,72 +1,36 @@
 ---
 name: prp-dev-multiplatform
-description: Auto-detect platform (FastAPI, Odoo, PHP) and route to appropriate platform-specific skill. Use when the user is coding, refactoring, or asking about implementation details but platform is not yet determined. This skill helps select the right platform skill automatically.
+description: Intelligent platform router for PRP development. Automatically detects whether the project is FastAPI, Odoo, or PHP and provides guidance on which specific skill to use.
 ---
 
-# PRP Dev – Platform Router
+# 🚦 PRP Dev – Platform Router (Pure Agentic)
 
-## Purpose
+Skill นี้ทำหน้าที่เป็น **"พนักงานต้อนรับอัจฉริยะ"** ที่จะช่วยตรวจจับว่าโปรเจกต์ที่คุณกำลังทำงานอยู่นั้นใช้เทคโนโลยีอะไร และแนะนำให้ AI ตัวอื่นๆ (หรือตัวผมเอง) ใช้ Skill เฉพาะทางที่ถูกต้องในการทำงาน
 
-Skill นี้ทำหน้าที่เป็น **router** ที่ตรวจจับ platform อัตโนมัติและแนะนำให้ใช้ platform-specific skill ที่เหมาะสม
+## 🔍 Platform Detection Logic
 
----
+เมื่อเริ่มงานใหม่หรือเมื่อสภาพแวดล้อมยังไม่ชัดเจน ผมจะทำการสแกนไฟล์ดังนี้:
 
-## Platform Detection Logic
+### 1. 🐍 FastAPI
+- **Check**: `main.py`, `app.py` ที่มี `from fastapi import FastAPI` หรือไฟล์ `requirements.txt` ที่ระบุ `fastapi`
+- **Recommended Skill**: `prp-dev-fastapi`
 
-เมื่อเริ่มทำงานหรือเมื่อ platform ยังไม่ชัดเจน:
+### 2. 📦 Odoo (ERP)
+- **Check**: โฟลเดอร์ `addons/`, ไฟล์ `__manifest__.py` (13+) หรือ `__openerp__.py` (8)
+- **Recommended Skill**: `prp-dev-odoo`
 
-1. **ตรวจสอบ FastAPI indicators:**
-   - มี `main.py` หรือ `app.py` ที่ `from fastapi import FastAPI`
-   - มี `fastapi` ใน `requirements.txt` / `pyproject.toml`
-   - มี `uvicorn` หรือ `gunicorn` ใน dependencies
-   - → **แนะนำใช้ skill: `prp-dev-fastapi`**
-
-2. **ตรวจสอบ Odoo indicators:**
-   - มี `addons/` folder หรือโครง `models/`, `views/`
-   - มี `__manifest__.py` (Odoo 13+) หรือ `__openerp__.py` (Odoo 8)
-   - → **แนะนำใช้ skill: `prp-dev-odoo`**
-
-3. **ตรวจสอบ PHP indicators:**
-   - มี `application/config/config.php` → CodeIgniter 3
-   - มี `composer.json` กับ `"yiisoft/yii2"` → Yii Framework
-   - มี `application/` folder → CodeIgniter 3
-   - มี `vendor/yiisoft/` folder → Yii Framework
-   - → **แนะนำใช้ skill: `prp-dev-php`**
+### 3. 🐘 PHP (CI/Yii)
+- **Check**: โฟลเดอร์ `application/` (CodeIgniter) หรือ `vendor/yiisoft/` (Yii)
+- **Recommended Skill**: `prp-dev-php`
 
 ---
 
-## Behavior
+## 🛠️ Action Flow
 
-เมื่อตรวจพบ platform:
-
-1. **รายงาน platform ที่ตรวจพบ:**
-   - "Detected: FastAPI + SQLAlchemy + Pydantic"
-   - "Detected: Odoo 13 module structure"
-   - "Detected: PHP CodeIgniter 3"
-
-2. **แนะนำ platform-specific skill:**
-   - FastAPI → ใช้ `prp-dev-fastapi` skill
-   - Odoo → ใช้ `prp-dev-odoo` skill
-   - PHP → ใช้ `prp-dev-php` skill
-
-3. **ถ้า platform ชัดเจนแล้ว:**
-   - ให้ platform-specific skill จัดการต่อ
-   - ไม่ต้องผ่าน skill นี้ซ้ำ
+เมื่อตรวจพบ Platform แล้ว:
+1. **แจ้งผล**: บอกให้คุณทราบว่าตรวจพบ Stack อะไร (เช่น "Detected: Odoo 13 module")
+2. **เปลี่ยนโหมด**: ผมจะดึงความรู้จาก Skill เฉพาะทางนั้นๆ มาใช้ในการวางแผน (/02-Plan) และเขียนโค้ด (/03-Code) ทันที
+3. **Fallback**: หากไม่พบ Stack ที่คุ้นเคย ผมจะขอให้คุณระบุรายละเอียด หรือใช้มาตรฐาน **Generic Python/JS** แทน
 
 ---
-
-## Fallback
-
-ถ้าไม่สามารถตรวจจับ platform ได้:
-
-1. ถามผู้ใช้โดยตรงว่าใช้ platform อะไร
-2. หรือดูจาก context ของคำถาม (เช่น พูดถึง "async/await" → FastAPI, พูดถึง "module" → Odoo)
-3. แนะนำให้ใช้ platform-specific skill ที่เหมาะสม
-
----
-
-## Related Skills
-
-- `prp-dev-fastapi` - สำหรับ FastAPI projects
-- `prp-dev-odoo` - สำหรับ Odoo projects
-- `prp-dev-php` - สำหรับ PHP projects (CodeIgniter 3 / Yii Framework)
+*Developed for PRPs-Framework — Hybrid Development Support*

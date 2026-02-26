@@ -38,7 +38,7 @@ python .cursor/scripts/onboarding.py
 ## Commands ที่แสดงใน Welcome (หลัง Cleanup 005)
 
 ```
-00-Coach      — Mentor & Advisor (Read-Only)
+99-Coach      — Mentor & Advisor (Read-Only)
 01-New-Task   — สร้าง Task ใหม่
 02-Plan       — วางแผน Implementation
 03-Code       — Implement Code

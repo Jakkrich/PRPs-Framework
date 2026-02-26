@@ -57,8 +57,8 @@ You are a Senior Architect and Project Mentor. Your job is to guide the user thr
 | PRPs-Framework/ | Clone หรือ Copy framework มาก่อน |
 | .cursor/.venv/ | `python .cursor/scripts/setup-venv.py` |
 | installed.flag | `python .cursor/scripts/setup-venv.py` |
-| .auto-claude/specs/ | `/init-sync` |
-| INITIAL.md | `/init-sync` |
+| .auto-claude/specs/ | `/00-Init` |
+| INITIAL.md | `/00-Init` |
 
 **ถ้ามีข้อไม่ผ่าน → หยุดที่นี่** แล้วแนะนำแก้ไขก่อน
 **ถ้าทุกข้อผ่าน → ไปที่ Phase B**
@@ -103,7 +103,7 @@ You are a Senior Architect and Project Mentor. Your job is to guide the user thr
 - **New User (ไม่มี .venv)**:
   - Coach: "ยินดีต้อนรับครับ! ผมเห็นว่ายังไม่ได้ติดตั้ง Environment ให้ผมพาคุณ Setup ทีละขั้นนะครับ"
   - แนะนำ: `python .cursor/scripts/setup-venv.py`
-  - ตามด้วย: `/init-sync`
+  - ตามด้วย: `/00-Init`
 
 - **Vague Request**:
   - User: "Add login."

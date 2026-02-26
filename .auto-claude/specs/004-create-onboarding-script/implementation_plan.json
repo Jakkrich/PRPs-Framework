@@ -58,7 +58,7 @@
         },
         {
           "id": "1.6",
-          "description": "Step 5: Welcome Message — แสดง Quick Start Guide พร้อมรายชื่อคำสั่งที่ใช้ได้ (00-Coach, 01-New-Task, 02-Plan, 03-Code, 04-Verify, 10-Human, 11-Agent) และ suggested first action",
+          "description": "Step 5: Welcome Message — แสดง Quick Start Guide พร้อมรายชื่อคำสั่งที่ใช้ได้ (99-Coach, 01-New-Task, 02-Plan, 03-Code, 04-Verify, 10-Human, 11-Agent) และ suggested first action",
           "status": "completed",
           "files": [
             ".cursor/scripts/onboarding.py"
