@@ -1,81 +1,127 @@
-# New Task
+# Create New Task
 
-Create a new task in the `.auto-claude` system. This initializes the task artifacts required for the backend engine.
+Create an ISSUE spec directory and initial plan files for any kind of work item (bug, feature, change, refactor, etc.).
 
-## Usage:
+## Usage
 
 ```
-/01-New-Task $ARGUMENTS
+/01-New-Task {Title} ["Description"]
 ```
 
-The arguments should describe the task at a high level:
-- Optional type: `BUG`, `FEAT`, etc.
-- Short title
-- Description (optional)
+---
 
-Example: `FEAT Add dark mode support`
+## Internal Process & AI Agent Instructions
 
-## Process
+### Step 1: Execute Creation Script
+Run the script to scaffold the task folder structure:
 
-1.  **Analyze Request**
-    - Identify the specific goal and type of the task.
+**Mode 1 — CLI Arguments (ภาษาอังกฤษ):**
+```powershell
+# หากอยู่ใน Submodule (เช่น Odoo Module) ให้ใช้ --root เพื่อระบุ Folder ของ Module นั้น
+python .cursor/scripts/create-task.py "{Title}" "{Description}" --root "./" 
+```
 
-2.  **Generate Task ID & Path**
-    - Scan `.auto-claude/specs/` for existing numeric, 3-digit IDs (e.g., `001`, `002`).
-    - Determine the next available ID (e.g., `003`).
-    - Generate a slug from the title (e.g., `add-dark-mode`).
-    - **Target Directory**: `.auto-claude/specs/{ID}-{slug}/` (e.g., `.auto-claude/specs/003-add-dark-mode/`).
+**Mode 2 — File Input (แนะนำสำหรับภาษาไทย):**
+```powershell
+# หากอยู่ใน Submodule ให้ใช้ --root เพื่อระบุ Folder ของ Module นั้น
+python .cursor/scripts/create-task.py --file task-input.json --root "./"
+```
+โดย Agent ต้องสร้างไฟล์ `task-input.json` ในโฟลเดอร์ที่จะทำงานก่อน (ใช้ `write_to_file`) ด้วย format:
+```json
+{
+  "title": "ชื่องานภาษาไทย",
+  "description": "คำอธิบายภาษาไทย"
+}
+```
 
-3.  **Create Artifacts**
-    - Create the target directory.
-    - Create the following files:
+### 🧠 Submodule Awareness (CRITICAL)
+หากโปรเจกต์เป็นแบบ Multi-Module (เช่น Odoo) และงานนี้เกี่ยวข้องกับ Module ใด Module หนึ่งเป็นการเฉพาะ:
+1. **Detect Submodule**: ตรวจสอบว่าไฟล์ที่กำลังแก้อยู่ หรือส่วนที่เกี่ยวข้องกับ Task นี้ อยู่ใน Submodule หรือไม่ (เช่น `extra-addons/my_module/`)
+2. **Set Root**: ใช้ flag `--root` ไปที่โฟลเดอร์ของ Module นั้น เพื่อให้ `.auto-claude` ถูกสร้างแยกเก็บไว้ใน Module นั้นโดยเฉพาะ
+3. **Initialize if needed**: หาก Module นั้นยังไม่มี `.auto-claude` สคริปต์จะสร้างให้ใหม่เองโดยอัตโนมัติ และจะเพิ่ม `.auto-claude/` ลงใน `.gitignore` ของ Module นั้นให้ด้วยถ้ายังไม่มี
 
-    **`spec.md`** (The User Requirement)
-    ```markdown
-    # {ID}: {TITLE}
 
-    ## Overview
-    {DESCRIPTION}
+> ⚠️ **Encoding Warning**: หากคำอธิบาย (Description) เป็นภาษาไทย **ต้องใช้ `--file` mode** หรือใช้ `write_to_file` / `replace_file_content` เพื่ออัปเดตเนื้อหาภาษาไทยลงในไฟล์โดยตรง **ห้ามส่ง String ภาษาไทยผ่าน CLI Arguments** เพราะจะทำให้สระหายบน Windows
 
-    ## Requirements
-    - [ ] ...
-    ```
+**สคริปต์จะสร้าง:**
+- `.auto-claude/specs/{ID}-{slug}/`
+  - `implementation_plan.json` (Status: `pending`)
+  - `task_metadata.json` (Default values - จะถูกอัปเดตใน Step 2)
+  - `requirements.json`
+  - `spec.md` (Template)
 
-    **`requirements.json`** (Backend Metadata)
-    ```json
-    {
-      "task_description": "{DESCRIPTION}",
-      "workflow_type": "feature" // or "bug", "chore", etc.
-    }
-    ```
+---
 
-    **`implementation_plan.json`** (Task State - Initial)
-    ```json
-    {
-      "feature": "{TITLE}",
-      "description": "{DESCRIPTION}",
-      "status": "backlog",
-      "planStatus": "pending",
-      "phases": [],
-      "created_at": "{ISO_DATE}",
-      "updated_at": "{ISO_DATE}"
-    }
-    ```
+### Step 2: AI Intelligent Analysis (MANDATORY)
 
-    **`task_metadata.json`** (Agent Config - Optional defaults)
-    ```json
-    {
-      "thinkingLevel": "high",
-      "sourceType": "manual"
-    }
-    ```
+> 🧠 **ขั้นตอนนี้บังคับ** — Agent ต้องทำทันทีหลัง Step 1 โดยไม่ต้องรอคำสั่งเพิ่มจากผู้ใช้
 
-4.  **Confirm**
-    - Output the path of the created task.
-    - Prompt user to run `/02-Plan {ID}` to proceed.
-    - > 💡 **Tip**: For a more detailed spec, run `/07-Spec` after this step.
+#### 2.1 — Analyze & Classify Task
+
+จากเนื้อหาของ Title และ Description ให้ Agent วิเคราะห์และประเมินค่าต่อไปนี้:
+
+| Field        | ตัวเลือก                                     | วิธีตัดสิน                                         |
+|--------------|----------------------------------------------|-----------------------------------------------------|
+| `category`   | `fix`, `feat`, `refactor`, `docs`, `chore`   | ดูจาก keyword เช่น bug→fix, add/new→feat, update docs→docs |
+| `priority`   | `low`, `medium`, `high`, `critical`          | ผลกระทบต่อผู้ใช้/ระบบมากแค่ไหน                       |
+| `complexity` | `low`, `medium`, `high`                      | จำนวนไฟล์/ระบบที่ต้องแก้ไข                           |
+| `impact`     | `low`, `medium`, `high`                      | ส่งผลต่อผู้ใช้งานกี่คน / กี่ feature                   |
+
+#### 2.2 — Update `task_metadata.json`
+
+นำค่าที่วิเคราะห์ได้ไปอัปเดตทับค่า Default ในไฟล์ `task_metadata.json`:
+
+```json
+{
+  "category": "<analyzed>",
+  "priority": "<analyzed>",
+  "complexity": "<analyzed>",
+  "impact": "<analyzed>"
+}
+```
+
+#### 2.3 — Enrich `spec.md`
+
+ทำการ Research เบื้องต้นใน Codebase เพื่อ:
+- หาไฟล์ที่เกี่ยวข้อง → เติมในส่วน `## Context`
+- หา Related Tasks ที่มีอยู่แล้ว → เติมในส่วน `## Related PRPs`
+- ปรับ `## Impact / Priority` ให้ตรงกับการวิเคราะห์ (แทนที่ค่า Medium ทั้งหมด)
+- ถ้า Description เป็นภาษาไทย ให้ใช้ `replace_file_content` เพื่อเขียนทับข้อมูลที่ถูกต้องลงไป
+
+#### 2.4 — Fix Thai Encoding (ถ้าจำเป็น)
+
+ถ้าพบว่าไฟล์ `spec.md`, `implementation_plan.json`, หรือ `requirements.json` มีสระหาย/ตัวอักษรผิดเพี้ยน (จากปัญหา Windows CLI Encoding) ให้ Agent ใช้ `replace_file_content` เขียนค่าที่ถูกต้องทับทันที
+
+---
+
+### Step 3: Output Summary
+
+สรุปให้ผู้ใช้ทราบในรูปแบบ:
+
+```
+✅ Task Created: {ID}-{slug}
+📁 Path: .auto-claude/specs/{ID}-{slug}/
+
+🧠 AI Analysis:
+- Category: {analyzed_category}
+- Priority: {analyzed_priority}
+- Complexity: {analyzed_complexity}
+- Impact: {analyzed_impact}
+
+📌 Next Step: Run `/02-Plan {ID}` to generate the Implementation Plan.
+```
+
+---
+
+## Git Context (Reference)
+
+Branch naming follows `PRPs-Framework/_notes/git-branch-naming-conventions.md`:
+- `fix/`: Bugs
+- `feat/`: Features/Changes
+- `refactor/`: Refactoring
+- `docs/`: Documentation
 
 ## Output
-
-- **New Directory**: `.auto-claude/specs/{ID}-{slug}/`
-- **Files**: `spec.md`, `requirements.json`, `implementation_plan.json`, `task_metadata.json`
+- **New Spec Directory** created under `.auto-claude/specs/{ID}-{slug}/`.
+- **Enriched Metadata** with AI-analyzed category, priority, complexity, and impact.
+- **Next Step**: Run `/02-Plan {ID}` to generate the full Implementation Plan using AI research.
