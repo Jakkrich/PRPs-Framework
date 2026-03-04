@@ -1,0 +1,57 @@
+# =============================================================================
+# .cursorignore — Prevent Cursor from auto-indexing these paths
+# Goal: Keep AI context lean, reduce token usage on irrelevant generated files
+# =============================================================================
+
+# ── Git internals ─────────────────────────────────────────────────────────────
+.git/
+
+# ── Auto-Claude runtime data (generated, not source-of-truth for coding) ──────
+# implementation_plan.json and qa_report.json are large & machine-generated.
+# Reference them explicitly with @file when needed instead.
+.auto-claude/specs/**/implementation_plan.json
+.auto-claude/specs/**/qa_report.md
+.auto-claude/specs/**/requirements.json
+.auto-claude/specs/**/design_notes.md
+.auto-claude/specs/**/build-progress.txt
+.auto-claude/specs/**/generation_progress.json
+.auto-claude/specs/**/feedback_images/
+
+# Agent memory / knowledge graph state (large, internal to agent)
+.auto-claude/agents/
+.auto-claude/references/
+.auto-claude/skills/
+.auto-claude/project_index.json
+
+# Auto-Claude UI runtime data
+.auto-claude-ui/
+.auto-claude-security.json
+.claude_settings.json
+
+# ── PRPs-Framework build output & dependencies ────────────────────────────────
+PRPs-Framework/node_modules/
+PRPs-Framework/out/
+PRPs-Framework/dist/
+PRPs-Framework/.vite/
+PRPs-Framework/apps/frontend/node_modules/
+PRPs-Framework/apps/frontend/out/
+PRPs-Framework/apps/frontend/dist/
+
+# Lock files (huge, never useful in AI context)
+PRPs-Framework/**/package-lock.json
+PRPs-Framework/**/yarn.lock
+PRPs-Framework/**/pnpm-lock.yaml
+
+# Test snapshots & coverage (generated)
+PRPs-Framework/**/__snapshots__/
+PRPs-Framework/**/coverage/
+PRPs-Framework/**/.nyc_output/
+
+# ── Logs ──────────────────────────────────────────────────────────────────────
+logs/
+*.log
+**/*.log
+
+# ── OS / Editor noise ─────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
