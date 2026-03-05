@@ -1,0 +1,65 @@
+{
+    "spec_id": "DEMO-006-Completed",
+    "created_at": "2026-03-01T10:00:00Z",
+    "updated_at": "2026-03-05T14:45:00Z",
+    "phases": {
+        "planning": {
+            "phase": "planning",
+            "status": "completed",
+            "entries": [
+                {
+                    "timestamp": "2026-03-01T14:00:00Z",
+                    "type": "text",
+                    "content": "Initial planning phase for stripe integration",
+                    "phase": "planning"
+                }
+            ]
+        },
+        "coding": {
+            "phase": "coding",
+            "status": "completed",
+            "started_at": "2026-03-01T15:00:00Z",
+            "completed_at": "2026-03-03T12:00:00Z",
+            "entries": [
+                {
+                    "timestamp": "2026-03-01T15:00:10Z",
+                    "type": "phase_start",
+                    "content": "Starting coding phase",
+                    "phase": "coding"
+                },
+                {
+                    "timestamp": "2026-03-03T12:00:00Z",
+                    "type": "phase_end",
+                    "content": "Coding complete. All payment flows implemented.",
+                    "phase": "coding"
+                }
+            ]
+        },
+        "validation": {
+            "phase": "validation",
+            "status": "completed",
+            "started_at": "2026-03-03T12:00:00Z",
+            "completed_at": "2026-03-05T14:45:00Z",
+            "entries": [
+                {
+                    "timestamp": "2026-03-03T12:01:00Z",
+                    "type": "phase_start",
+                    "content": "Starting validation checks with sandbox gateway.",
+                    "phase": "validation"
+                },
+                {
+                    "timestamp": "2026-03-04T12:00:00Z",
+                    "type": "success",
+                    "content": "Sandbox payment flow validated.",
+                    "phase": "validation"
+                },
+                {
+                    "timestamp": "2026-03-05T14:45:00Z",
+                    "type": "phase_end",
+                    "content": "All tests passed. Finished task.",
+                    "phase": "validation"
+                }
+            ]
+        }
+    }
+}

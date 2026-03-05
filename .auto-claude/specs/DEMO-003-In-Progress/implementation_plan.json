@@ -1,0 +1,58 @@
+{
+    "feature": "DEMO-003: [In-Progress] Bug Squash Task",
+    "description": "Investigating and fixing memory leak in the data processing module.",
+    "status": "in_progress",
+    "planStatus": "approved",
+    "xstateState": "coding",
+    "updated_at": "2026-03-05T15:10:00Z",
+    "phases": [
+        {
+            "phase": 1,
+            "name": "Investigation Phase",
+            "type": "logic",
+            "subtasks": [
+                {
+                    "id": "1.1",
+                    "description": "Reproduce memory leak in test environment",
+                    "status": "completed",
+                    "verification": {
+                        "type": "command",
+                        "run": "npm run test:leak-repro",
+                        "scenario": "Confirmed leak at 500MB+ for 1000 items"
+                    }
+                },
+                {
+                    "id": "1.2",
+                    "description": "Identify root cause with heap snapshot",
+                    "status": "completed",
+                    "verification": {
+                        "type": "text",
+                        "scenario": "Found unclosed file handlers in Parser.ts"
+                    }
+                }
+            ]
+        },
+        {
+            "phase": 2,
+            "name": "Fixing Phase",
+            "type": "logic",
+            "subtasks": [
+                {
+                    "id": "2.1",
+                    "description": "Implement fix for file handler leakage",
+                    "status": "in_progress",
+                    "verification": {
+                        "type": "command",
+                        "run": "npm run build:fix",
+                        "scenario": "Build fix and check memory usage"
+                    }
+                },
+                {
+                    "id": "2.2",
+                    "description": "Optimize garbage collection strategy",
+                    "status": "pending"
+                }
+            ]
+        }
+    ]
+}

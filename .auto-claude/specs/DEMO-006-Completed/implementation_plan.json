@@ -1,0 +1,44 @@
+{
+    "feature": "DEMO-006: [Done] API Integration Complete",
+    "description": "Integration with external payment gateway (Stripe/PromptPay).",
+    "status": "done",
+    "planStatus": "approved",
+    "xstateState": "human_review",
+    "updated_at": "2026-03-05T14:45:00Z",
+    "phases": [
+        {
+            "phase": 1,
+            "name": "Integration Setup",
+            "type": "infrastructure",
+            "subtasks": [
+                {
+                    "id": "1.1",
+                    "description": "Configure Stripe API keys",
+                    "status": "completed"
+                },
+                {
+                    "id": "1.2",
+                    "description": "Setup webhook endpoint",
+                    "status": "completed"
+                }
+            ]
+        },
+        {
+            "phase": 2,
+            "name": "Payment Flow Code",
+            "type": "logic",
+            "subtasks": [
+                {
+                    "id": "2.1",
+                    "description": "Implement checkout session creation",
+                    "status": "completed"
+                },
+                {
+                    "id": "2.2",
+                    "description": "Handle success/failure webhooks",
+                    "status": "completed"
+                }
+            ]
+        }
+    ]
+}

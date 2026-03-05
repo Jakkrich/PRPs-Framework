@@ -1,0 +1,49 @@
+{
+  "spec_id": "004-create-onboarding-script",
+  "created_at": "2026-02-19T12:06:47Z",
+  "updated_at": "2026-02-19T19:19:45.918926",
+  "phases": {
+    "planning": {
+      "phase": "planning",
+      "status": "completed",
+      "started_at": "2026-02-19T12:06:47Z",
+      "completed_at": "2026-02-19T12:06:47Z",
+      "entries": [
+        {
+          "timestamp": "2026-02-19T12:06:47Z",
+          "type": "text",
+          "content": "Initial planning complete for 004-create-onboarding-script",
+          "phase": "planning"
+        }
+      ]
+    },
+    "coding": {
+      "phase": "coding",
+      "status": "completed",
+      "started_at": "2026-02-19T12:06:47Z",
+      "completed_at": "2026-02-19T19:19:45.918926",
+      "entries": [
+        {
+          "timestamp": "2026-02-19T19:19:45.918926",
+          "type": "text",
+          "content": "Implementation finished for 004-create-onboarding-script",
+          "phase": "coding"
+        }
+      ]
+    },
+    "validation": {
+      "phase": "validation",
+      "status": "completed",
+      "started_at": "2026-02-19T19:19:45.918926",
+      "completed_at": "2026-02-19T19:19:45.918926",
+      "entries": [
+        {
+          "timestamp": "2026-02-19T19:19:45.918926",
+          "type": "text",
+          "content": "All tests passed.",
+          "phase": "validation"
+        }
+      ]
+    }
+  }
+}

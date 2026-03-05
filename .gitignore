@@ -19,7 +19,7 @@
 # ------------------------------
 .auto-claude/issues/*
 !.auto-claude/issues/.gitkeep
-.auto-claude/specs/*
+# .auto-claude/specs/*
 !.auto-claude/specs/.gitkeep
 
 # ------------------------------

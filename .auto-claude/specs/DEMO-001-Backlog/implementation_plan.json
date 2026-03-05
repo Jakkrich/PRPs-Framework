@@ -1,0 +1,31 @@
+{
+    "feature": "DEMO-001: [Backlog] New Feature Implementation",
+    "description": "Implementation of a new user authentication system with OAuth2 and JWT.",
+    "status": "backlog",
+    "planStatus": "approved",
+    "xstateState": "planning",
+    "updated_at": "2026-03-05T15:00:00Z",
+    "phases": [
+        {
+            "phase": 1,
+            "name": "Initial Planning",
+            "type": "logic",
+            "subtasks": [
+                {
+                    "id": "1.1",
+                    "description": "Define OAuth2 flow requirements",
+                    "status": "completed",
+                    "verification": {
+                        "type": "text",
+                        "scenario": "Documentation review"
+                    }
+                },
+                {
+                    "id": "1.2",
+                    "description": "Setup project structure for authentication module",
+                    "status": "pending"
+                }
+            ]
+        }
+    ]
+}

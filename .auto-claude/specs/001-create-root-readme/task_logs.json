@@ -1,0 +1,49 @@
+{
+  "spec_id": "001-create-root-readme",
+  "created_at": "2026-02-19T11:01:12.146887Z",
+  "updated_at": "2026-02-19T18:02:05.888732",
+  "phases": {
+    "planning": {
+      "phase": "planning",
+      "status": "completed",
+      "started_at": "2026-02-19T11:01:12.146887Z",
+      "completed_at": "2026-02-19T11:01:12.146887Z",
+      "entries": [
+        {
+          "timestamp": "2026-02-19T11:01:12.146887Z",
+          "type": "text",
+          "content": "Initial planning complete for 001-create-root-readme",
+          "phase": "planning"
+        }
+      ]
+    },
+    "coding": {
+      "phase": "coding",
+      "status": "completed",
+      "started_at": "2026-02-19T11:01:12.146887Z",
+      "completed_at": "2026-02-19T18:02:05.888732",
+      "entries": [
+        {
+          "timestamp": "2026-02-19T18:02:05.888732",
+          "type": "text",
+          "content": "Implementation finished for 001-create-root-readme",
+          "phase": "coding"
+        }
+      ]
+    },
+    "validation": {
+      "phase": "validation",
+      "status": "completed",
+      "started_at": "2026-02-19T18:02:05.888732",
+      "completed_at": "2026-02-19T18:02:05.888732",
+      "entries": [
+        {
+          "timestamp": "2026-02-19T18:02:05.888732",
+          "type": "text",
+          "content": "All tests passed.",
+          "phase": "validation"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,32 @@
+{
+    "feature": "DEMO-007: [Error] Deployment Pipeline Setup",
+    "description": "Setting up CI/CD pipeline for automatic deployment to GCP.",
+    "status": "error",
+    "planStatus": "rejected",
+    "xstateState": "coding",
+    "updated_at": "2026-03-05T15:20:00Z",
+    "phases": [
+        {
+            "phase": 1,
+            "name": "Pipeline Setup",
+            "type": "infrastructure",
+            "subtasks": [
+                {
+                    "id": "1.1",
+                    "description": "Configure GitHub Actions workflow",
+                    "status": "completed"
+                },
+                {
+                    "id": "1.2",
+                    "description": "Setup GCP service account secrets",
+                    "status": "failed",
+                    "verification": {
+                        "type": "command",
+                        "run": "gcloud auth activate-service-account",
+                        "scenario": "Error: Insufficient permissions for service account"
+                    }
+                }
+            ]
+        }
+    ]
+}

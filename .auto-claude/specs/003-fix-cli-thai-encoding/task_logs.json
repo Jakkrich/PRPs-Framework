@@ -1,0 +1,49 @@
+{
+  "spec_id": "003-fix-cli-thai-encoding",
+  "created_at": "2026-02-19T11:37:45Z",
+  "updated_at": "2026-02-19T18:58:58.932401",
+  "phases": {
+    "planning": {
+      "phase": "planning",
+      "status": "completed",
+      "started_at": "2026-02-19T11:37:45Z",
+      "completed_at": "2026-02-19T11:37:45Z",
+      "entries": [
+        {
+          "timestamp": "2026-02-19T11:37:45Z",
+          "type": "text",
+          "content": "Initial planning complete for 003-fix-cli-thai-encoding",
+          "phase": "planning"
+        }
+      ]
+    },
+    "coding": {
+      "phase": "coding",
+      "status": "completed",
+      "started_at": "2026-02-19T11:37:45Z",
+      "completed_at": "2026-02-19T18:58:58.932401",
+      "entries": [
+        {
+          "timestamp": "2026-02-19T18:58:58.932401",
+          "type": "text",
+          "content": "Implementation finished for 003-fix-cli-thai-encoding",
+          "phase": "coding"
+        }
+      ]
+    },
+    "validation": {
+      "phase": "validation",
+      "status": "completed",
+      "started_at": "2026-02-19T18:58:58.932401",
+      "completed_at": "2026-02-19T18:58:58.932401",
+      "entries": [
+        {
+          "timestamp": "2026-02-19T18:58:58.932401",
+          "type": "text",
+          "content": "All tests passed.",
+          "phase": "validation"
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+    "files_to_modify": [
+        "src/modules/processor.ts",
+        "src/utils/parser.ts"
+    ],
+    "files_to_reference": [
+        "docs/architecture/memory-model.md"
+    ],
+    "patterns": [
+        "Use stream-based processing for large datasets to avoid heap exhaustion."
+    ]
+}

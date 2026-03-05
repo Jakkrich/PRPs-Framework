@@ -1,0 +1,5 @@
+{
+    "task_description": "DEMO-003: Investigating and fixing memory leak in the data processing module.",
+    "user_goal": "Optimize application performance by resolving memory leakage during large data imports.",
+    "workflow_type": "bugfix"
+}

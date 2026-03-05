@@ -1,0 +1,49 @@
+{
+  "spec_id": "002-update-core-readme",
+  "created_at": "2026-02-19T11:06:17.941672Z",
+  "updated_at": "2026-02-19T18:10:34.142639",
+  "phases": {
+    "planning": {
+      "phase": "planning",
+      "status": "completed",
+      "started_at": "2026-02-19T11:06:17.941672Z",
+      "completed_at": "2026-02-19T11:06:17.941672Z",
+      "entries": [
+        {
+          "timestamp": "2026-02-19T11:06:17.941672Z",
+          "type": "text",
+          "content": "Initial planning complete for 002-update-core-readme",
+          "phase": "planning"
+        }
+      ]
+    },
+    "coding": {
+      "phase": "coding",
+      "status": "completed",
+      "started_at": "2026-02-19T11:06:17.941672Z",
+      "completed_at": "2026-02-19T18:10:34.142639",
+      "entries": [
+        {
+          "timestamp": "2026-02-19T18:10:34.142639",
+          "type": "text",
+          "content": "Implementation finished for 002-update-core-readme",
+          "phase": "coding"
+        }
+      ]
+    },
+    "validation": {
+      "phase": "validation",
+      "status": "completed",
+      "started_at": "2026-02-19T18:10:34.142639",
+      "completed_at": "2026-02-19T18:10:34.142639",
+      "entries": [
+        {
+          "timestamp": "2026-02-19T18:10:34.142639",
+          "type": "text",
+          "content": "All tests passed.",
+          "phase": "validation"
+        }
+      ]
+    }
+  }
+}
