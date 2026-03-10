@@ -8,10 +8,10 @@ Template optimized for AI agents to implement features with sufficient context a
 ## Change History
 - **Created:** YYYY-MM-DD
 - **Type:** BUG / FEATURE / CHANGE / REFACTOR / OTHER
-- **Source Spec:** [PRPs-Framework/issues/ISSUE_xxx_*.md]
+- **Source Spec:** [.auto-claude/specs/ISSUE_xxx_*.md]
 - **Related PRPs:**
-  - [PRPs-Framework/PRPs/PRPs_FEAT-xxx_*.md] - [Why related]
-  - [PRPs-Framework/PRPs/PRPs_BUG-yyy_*.md] - [Why related]
+  - [.auto-claude/specs/PRPs_FEAT-xxx_*.md] - [Why related]
+  - [.auto-claude/specs/PRPs_BUG-yyy_*.md] - [Why related]
 - **Updates:**
   - YYYY-MM-DD: [What changed in this PRP or its implementation]
 
@@ -55,32 +55,32 @@ Template optimized for AI agents to implement features with sufficient context a
 
 ## Plan / Subtasks
 
-**IMPORTANT: Section นี้จะถูกสร้างโดย `/generate-prp` command**
+**IMPORTANT: This section will be created by the `/generate-prp` command**
 
-Section นี้ใช้สำหรับระบุ subtasks ที่ต้องทำตามลำดับ พร้อม dependencies และ target files
+This section is used to specify subtasks to be executed in sequence, along with dependencies and target files.
 
 ```markdown
 ## Plan / Subtasks
 
-- [ ] T1: [ชื่อ subtask]
+- [ ] T1: [Subtask name]
      - Target files: [path/to/file1, path/to/file2]
      - Depends on: []
-     - Notes: [คำอธิบายสั้น ๆ]
+     - Notes: [Short description]
 
-- [ ] T2: [ชื่อ subtask]
+- [ ] T2: [Subtask name]
      - Target files: [...]
      - Depends on: [T1]
      - Notes: [...]
 ```
 
-**หลักการ:**
-- แบ่งงานเป็น subtasks ที่ชัดเจนและทำได้ทีละตัว
-- แต่ละ subtask ควรมี target files ที่ชัดเจน
-- ระบุ dependencies ระหว่าง subtasks (Depends on: [T1, T2])
-- Subtasks ควรเรียงตามลำดับที่ต้องทำ (dependency order)
-- Subtasks ควรสอดคล้องกับ "list of tasks" ใน Implementation Blueprint
+**Principles:**
+- Divide work into clear, actionable subtasks that can be tackled one by one.
+- Each subtask should have specific target files.
+- Specify dependencies between subtasks (Depends on: [T1, T2]).
+- Subtasks should follow an ascending dependency order.
+- Subtasks should align with the "list of tasks" in the Implementation Blueprint.
 
-**สำหรับ PRPs ที่ไม่ต้องการ task breakdown:** Section นี้สามารถเว้นว่างไว้ได้
+**For PRPs not requiring task breakdown:** This section can be left blank.
 
 ## All Needed Context
 
@@ -135,9 +135,9 @@ Agent will **fetch external URLs** and **read PDFs** when cited here. See `PRPs-
 ```
 
 ## Related PRPs
-- [PRPs-Framework/PRPs/PRPs_FEAT-xxx_some-feature_prp.md] - [Shared behavior or dependencies]
-- [PRPs-Framework/PRPs/PRPs_BUG-yyy_some-bug_prp.md] - [Historical bug or regression]
-- [PRPs-Framework/PRPs/PRPs_CHG-zzz_some-change_prp.md] - [Refactors that affect this area]
+- [.auto-claude/specs/PRPs_FEAT-xxx_some-feature_prp.md] - [Shared behavior or dependencies]
+- [.auto-claude/specs/PRPs_BUG-yyy_some-bug_prp.md] - [Historical bug or regression]
+- [.auto-claude/specs/PRPs_CHG-zzz_some-change_prp.md] - [Refactors that affect this area]
 
 ## Implementation Blueprint
 

@@ -1,8 +1,8 @@
 ---
 name: prp-core-git-pr-maker
 description: |
-  สถาปัตยกรรมเดิมของ prp-core: ผู้ช่วยทำ Pull Request (Git PR Maker) 
-  ช่วยรวบรวมข้อมูล Commits, เปลี่ยนแปลงไฟล์ และใช้งาน PR Template ของโปรเจกต์ (ถ้ามี) เพื่อสร้าง PR ผ่าน GitHub CLI
+  Original architecture from prp-core: Pull Request assistant (Git PR Maker).
+  Gathers commit data, changed files, and uses project PR Templates (if any) to create PRs via GitHub CLI.
 model: claud-3-5-sonnet
 color: gray
 ---

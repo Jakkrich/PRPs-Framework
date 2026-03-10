@@ -5,59 +5,59 @@ description: Comprehensive skill for PHP development following the PRP Pure Agen
 
 # 🐘 PRP Dev – PHP (Pure Agentic)
 
-Skill นี้ใช้เพื่อช่วยพัฒนาฟีเจอร์บน **PHP** ตามมาตรฐาน PRP Framework โดยเน้นเฟรมเวิร์ก CodeIgniter 3 (Legacy) และ Yii Framework 2 (Modern) ครอบคลุมการทำงานแบบ MVC และการป้องกันความปลอดภัยพื้นฐาน
+This Skill empowers feature development on **PHP** conforming to the PRP Framework standards, focusing principally on CodeIgniter 3 (Legacy) and Yii Framework 2 (Modern). It fully addresses MVC operations alongside fundamental security fortifications.
 
-## 🎯 Scope ของงาน
-ใช้ Skill นี้เมื่อ:
-- **Framework Dev**: สร้างหรือแก้ไข Controllers, Models และ Views
-- **Legacy Support**: ปรุงโค้ด CodeIgniter 3 ให้ปลอดภัยและเป็นระเบียบ
-- **Modern PHP**: พัฒนา Yii 2 ด้วย ActiveRecord และ Dependency Injection
-- **Workflow**: เมื่อทำงานใน Task ที่เกี่ยวข้องกับ PHP Apps
+## 🎯 Scope of Work
+Apply this Skill when:
+- **Framework Dev**: Constructing or mending Controllers, Models, and Views.
+- **Legacy Support**: Improving CodeIgniter 3 codebases for better security and structure.
+- **Modern PHP**: Advancing Yii 2 exploiting ActiveRecord and Dependency Injection.
+- **Workflow**: Doing Task-related work pertinent to PHP Apps.
 
 ---
 
 ## 1. 🔍 Framework Detection
-ตรวจสอบสภาพแวดล้อมก่อนเริ่มทำงาน:
-1. **CodeIgniter 3**: มองหา `application/config/config.php` หรือ `system/`
-2. **Yii 2**: มองหา `vendor/yiisoft/yii2` หรือ `config/web.php`
-3. **Composer**: ตรวจสอบ `composer.json` เพื่อดูเวอร์ชัน PHP และ Dependencies
+Probe the environment prior to starting work:
+1. **CodeIgniter 3**: Probe for `application/config/config.php` or `system/`.
+2. **Yii 2**: Probe for `vendor/yiisoft/yii2` or `config/web.php`.
+3. **Composer**: Look over `composer.json` for PHP versions and Dependencies.
 
 ---
 
 ## 2. 🏛️ Implementation Patterns
 
 ### CodeIgniter 3 (The Singleton Pattern)
-- **Namespacing**: มักจะไม่มี namespace (ใช้ Global)
-- **Loading**: ใช้ `$this->load->model('...')` หรือ `$this->load->view('...')`
-- **Security**: บังคับเช็ก `defined('BASEPATH') OR exit('...');` ที่หัวไฟล์เสมอ
+- **Namespacing**: Frequently lacks namespaces (Global usage).
+- **Loading**: Implements `$this->load->model('...')` or `$this->load->view('...')`.
+- **Security**: Compulsory check: `defined('BASEPATH') OR exit('...');` required universally at the top of files.
 
 ### Yii Framework 2 (The Component Pattern)
-- **ActiveRecord**: ใช้การ Query ผ่าน Model Class (เช่น `User::find()`)
-- **Namespacing**: ใช้ PSR-4 Namespacing เต็มรูปแบบ
-- **Views**: ใช้ `Html::encode()` และ `$this->render()`
+- **ActiveRecord**: Fulfills Querying through Model Classes (e.g., `User::find()`).
+- **Namespacing**: Extensively integrates PSR-4 Namespacing.
+- **Views**: Incorporates `Html::encode()` alongside `$this->render()`.
 
 ---
 
 ## 🛡️ Security Best Practices
-- **Prepared Statements**: บังคับใช้ Query Builder หรือ ORM ห้ามเขียน Raw SQL ที่รับ Variable ตรงๆ
-- **Input Validation**: ใช้ Framework Validation (CI Form Validation / Yii Rules)
-- **Output Escaping**: ป้องกัน XSS ด้วยการ Encode ข้อมูลก่อนแสดงผลบน HTML
+- **Prepared Statements**: Mandate using the Query Builder or ORM. Raw SQL accepting direct Variables is strictly forbidden.
+- **Input Validation**: Abide by Framework Validation (CI Form Validation / Yii Rules).
+- **Output Escaping**: Obviate XSS attacks by Encoding data before displaying it on HTML.
 
 ---
 
 ## 🔄 PRP Workflow Integration (Zero-Script)
-ในการทำงานแต่ละ Task ให้ Agent ยึดหลักการดังนี้:
+For each Task, the Agent must adhere to these principles:
 
 ### Phase: Planning (/02-Plan)
-- ระบุไฟล์ที่จะแก้ไข และวิธี Validate (เช่นรัน `phpunit`)
+- Designate the files for modification and outline Validation procedures (e.g., executing `phpunit`).
 
 ### Phase: Code (/03-Code)
-- ทำงานทีละ Subtask และเปลี่ยนสถานะใน `implementation_plan.json`
-- บันทึกการแก้ไขลงในไฟล์ `qa_report.md`
+- Proceed with Subtasks sequentially and subsequently update the status in `implementation_plan.json`.
+- Chronicle the edits in the `qa_report.md` file.
 
 ---
 
 ## 🧪 Testing & Validation
-- **Unit Testing**: ใช้ `PHPUnit` หรือเฟรมเวิร์กเทสที่โปรเจกต์ติดตั้งไว้
-- **Command Line**: มักจะรันเทสผ่าน `./vendor/bin/phpunit` หรือคำสั่งเฉพาะของเฟรมเวิร์ก
-- **Manual Check**: ระบุขั้นตอนการเปิดหน้าเว็บเพื่อเช็กความถูกต้องลงใน `qa_report.md`
+- **Unit Testing**: Employ `PHPUnit` or any pre-installed testing framework within the project.
+- **Command Line**: Tests typically run via `./vendor/bin/phpunit` or specialized framework commands.
+- **Manual Check**: Specify manual steps required to open a webpage mapping to correctness verification within `qa_report.md`.

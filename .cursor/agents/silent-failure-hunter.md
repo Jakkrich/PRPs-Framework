@@ -290,7 +290,7 @@ All error handling reviewed meets standards:
 
 ## Project-Specific Patterns
 
-When reviewing, check for project standards in CLAUDE.md:
+When reviewing, check for project standards in AI.md:
 
 - Specific logging functions (e.g., `logError` for production, `logForDebugging` for dev)
 - Error ID systems for tracking (e.g., Sentry error IDs)

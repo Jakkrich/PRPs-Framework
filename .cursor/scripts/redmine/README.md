@@ -1,25 +1,51 @@
-# 🔴 Redmine Integration Scripts
+# 🔴 Redmine Integration Scripts (Specialist Tools)
 
-ชุด Script สำหรับให้ AI Agent เชื่อมต่อกับ Redmine API เพื่อทำหน้าที่เป็น **Redmine Specialist Agent**
+A set of specialized scripts that empower AI Agents to interact with the **Redmine** project management system. These tools bridge the gap between local development cycles (PRPs) and corporate issue tracking.
 
-## 🛠 Prerequisites
-- Python 3.10+
-- `pip install -r requirements.txt`
+---
 
-## 🔑 Configuration
-คัดลอกไฟล์ `.env.example` เป็น `.env` และระบุข้อมูล:
-- `REDMINE_URL`: URL ของระบบ Redmine
-- `REDMINE_API_KEY`: API Key ส่วนตัว (ดึงได้จาก My Account ใน Redmine)
+## 🏗️ Getting Started
 
-## 📋 Available Commands
-| Script | Description |
-| :--- | :--- |
-| `get_issue.py` | ดึงข้อมูล Issue (ID, Subject, Description, Notes) |
-| `search_issues.py` | ค้นหา Issue (Title, assigned_to, author) |
-| `update_issue_note.py` | เพิ่ม Note/Comment ลงใน Issue |
-| `sync_description.py` | ซิงค์ `spec.md` สู่ Redmine Description |
-| `upload_to_issue.py` | แนบไฟล์ขึ้น Issue (เช่น QA Reports) |
-| `get_my_context.py` | ตรวจสอบสิทธิ์และงานที่ได้รับมอบหมายของ User |
+### 1. Prerequisites
+- **Python 3.10+**
+- Install dependencies:
+  ```bash
+  pip install -r requirements.txt
+  ```
 
-## 🛡 Security Rules
-- Script จะอนุญาตให้แก้ไขเฉพาะ Issue ที่ User เป็น **Author** หรือ **Assignee** เท่านั้น เพื่อป้องกันการแก้ไขงานของผู้อื่นโดยไม่ได้ตั้งใจ
+### 2. Configuration
+Create a `.env` file in this directory based on `.env.example`:
+- `REDMINE_URL`: Your Redmine server URL (e.g., `https://redmine.yourcompany.com`)
+- `REDMINE_API_KEY`: Your personal API Key (found under "My Account" in Redmine).
+
+---
+
+## 📋 Available Commands & Workflows
+
+| Script | Purpose | AI Use Case |
+| :--- | :--- | :--- |
+| **`get_issue.py`** | Fetch Jira/Issue data. | Used during `/01-Task` to download requirements. |
+| **`search_issues.py`**| Search issues. | Used to find related bugs or historical context. |
+| **`update_issue_note.py`**| Log progress. | Automates status updates in Redmine after steps. |
+| **`sync_description.py`**| Sync `spec.md`. | Keeps Redmine updated with the latest local Spec. |
+| **`upload_to_issue.py`**| Attach proofs. | Uploads `qa_report.md` or screenshots as evidence. |
+| **`get_my_context.py`**| User context. | Helps Agent identify who is currently working. |
+
+---
+
+## 🔄 Multi-IDE Environment Notice
+These scripts are called using relative paths from the active IDE root. 
+- If using **Cursor**: `.cursor/scripts/redmine/`
+- If using **Antigravity**: `.cursor/scripts/redmine/`
+- If using **Windsurf**: `.cursor/scripts/redmine/`
+
+*The **`active-ide.py`** at the project root will automatically update internal framework references to these paths.*
+
+---
+
+## 🛡️ Operational Safeguards
+- **Ownership Verification**: By default, agents are restricted to modifying issues where the user is either the **Author** or **Assignee**.
+- **Human-in-the-loop**: High-impact actions (like bulk updates) should be reviewed by the developer via the console output.
+
+---
+*Powered by PRPs-Framework Integration Engine*

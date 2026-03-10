@@ -1,22 +1,22 @@
 # 📋 Dashboard JSON Schema Standard
 
-เอกสารนี้คือ **Source of Truth** สำหรับโครงสร้างไฟล์ JSON ทั้งหมดที่ Dashboard (`Auto-Claude`) ต้องการ ข้อมูลนี้ถูกดึงมาจาก Frontend Source Code (`shared/types/task.ts`) เพื่อให้ AI สามารถสร้างไฟล์ได้ถูกต้องแม้ไม่มี Folder Frontend อยู่ในโปรเจกต์
+This document is the **Source of Truth** for the structure of all JSON files required by the Dashboard (`Auto-Claude`). This information is derived from the Frontend Source Code (`shared/types/task.ts`) so AI can correctly generate files even if the Frontend Folder doesn't exist in the project.
 
 ---
 
 ## 🏗️ 1. implementation_plan.json (The Hub)
 **Path**: `.auto-claude/specs/{ID}/implementation_plan.json`
-ไฟล์หลักที่ Dashboard ใช้แสดงผลบน Kanban และ Progress Bar
+The primary file used by the Dashboard to display on Kanban and Progress Bar.
 
 | Key | Type | Allowed Values / Pattern | Description |
 | :--- | :--- | :--- | :--- |
-| `feature` | string | `{ID}: {Title}` | ชื่อหัวข้อที่จะแสดงบน Card |
-| `description` | string | Markdown string | คำอธิบายสั้นๆ (แสดงใต้ชื่อ Card) |
+| `feature` | string | `{ID}: {Title}` | Task title to display on the Card |
+| `description` | string | Markdown string | Short description (displayed below the Card title) |
 | `status` | string | `backlog`, `queue`, `in_progress`, `ai_review`, `human_review`, `done`, `error` | **Kanban Column Location** |
-| `planStatus` | string | `planning`, `approved`, `rejected` | สถานะของแผนงาน |
-| `xstateState` | string | `planning`, `coding`, `validation`, `human_review` | สถานะของ State Machine (ใช้ Resume งาน) |
-| `updated_at` | string | ISO 8601 (UTC) | ใช้คัดกรองงานที่เพิ่งอัปเดต |
-| `phases` | array | `PhaseObject[]` | รายละเอียดขั้นตอนงาน (ดูด้านล่าง) |
+| `planStatus` | string | `planning`, `approved`, `rejected` | Plan status |
+| `xstateState` | string | `planning`, `coding`, `validation`, `human_review` | State Machine status (used to Resume work) |
+| `updated_at` | string | ISO 8601 (UTC) | Used to filter recently updated tasks |
+| `phases` | array | `PhaseObject[]` | Task phase details (see below) |
 
 ### 🔹 PhaseObject Structure
 ```json
@@ -50,19 +50,19 @@
 | `priority` | string | `low`, `medium`, `high`, `urgent` |
 | `complexity` | string | `trivial`, `small`, `medium`, `large`, `complex` |
 | `impact` | string | `low`, `medium`, `high`, `critical` |
-| `acceptanceCriteria` | string[] | รายการเงื่อนไขความสำเร็จ |
-| `dependencies` | string[] | รายการงานที่ต้องทำก่อน (ID หรือชื่อ) |
+| `acceptanceCriteria` | string[] | List of success criteria |
+| `dependencies` | string[] | List of prerequisite tasks (ID or name) |
 
 ---
 
 ## 📝 3. requirements.json (Content Fallback)
 **Path**: `.auto-claude/specs/{ID}/requirements.json`
-ใช้เป็นที่เก็บรายละเอียดเริ่มต้น และเป็นชุดข้อมูลให้ Spec Writer
+Used to store initial details and as a dataset for the Spec Writer.
 
 | Key | Type | Description |
 | :--- | :--- | :--- |
-| `task_description` | string | **Fallbackหลัก** ของ Description หากไฟล์อื่นไม่มี |
-| `user_goal` | string | จุดประสงค์ของผู้ใช้ |
+| `task_description` | string | **Primary Fallback** for Description if absent in other files |
+| `user_goal` | string | The user's goal |
 | `workflow_type` | string | `feature`, `bugfix`, `refactor`, `docs`, `test` |
 
 ---
@@ -91,4 +91,36 @@
 | :--- | :--- | :--- |
 | `files_to_modify` | string[] | paths (relative) |
 | `files_to_reference` | string[] | paths (relative) |
-| `patterns` | string[] | snippets หรือคำอธิบาย pattern |
+| `patterns` | string[] | snippets or pattern descriptions |
+
+---
+
+## 📡 6. complexity_assessment.json (Complexity & Risk)
+**Path**: `.auto-claude/specs/{ID}/complexity_assessment.json`
+
+| Key | Type | Allowed Values / Pattern |
+| :--- | :--- | :--- |
+| `complexity` | string | `simple`, `standard`, `complex` |
+| `workflow_type` | string | `feature`, `refactor`, `investigation`, `migration`, `simple` |
+| `confidence` | number | e.g. `0.0` - `1.0` |
+| `reasoning` | string | Description of the complexity |
+| `analysis` | object | Contains scope, integrations, and risk details |
+| `validation_recommendations` | object | Details about testing and validation requirements |
+
+### 🔹 Analysis & Validation Structure
+```json
+{
+  "analysis": {
+    "scope": { "estimated_files": 0, "is_cross_cutting": false },
+    "integrations": { "new_dependencies": [], "research_needed": false },
+    "risk": { "level": "low|medium|high", "concerns": ["Risk 1"] }
+  },
+  "validation_recommendations": {
+    "risk_level": "trivial|low|medium|high|critical",
+    "skip_validation": false,
+    "test_types_required": ["unit", "integration", "browser", "manual"],
+    "security_scan_required": false,
+    "reasoning": "Reasoning for validation approach"
+  }
+}
+```

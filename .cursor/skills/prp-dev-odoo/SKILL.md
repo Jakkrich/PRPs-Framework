@@ -5,22 +5,22 @@ description: Comprehensive skill for Odoo development following the PRP Pure Age
 
 # 📦 PRP Dev – Odoo (Pure Agentic)
 
-Skill นี้ใช้เพื่อช่วยพัฒนาฟีเจอร์บน **Odoo** (ERP) ตามมาตรฐาน PRP Framework โดยครอบคลุมทั้งเวอร์ชัน Legacy (Odoo 8) และ Modern (Odoo 13+) เน้นความถูกต้องของการสืบทอด (Inheritance) และความปลอดภัย (Security)
+This Skill operates to facilitate feature development on **Odoo** (ERP) in obedience to PRP Framework standards. It encompasses both Legacy (Odoo 8) and Modern (Odoo 13+) versions, enforcing correct Inheritance practices and optimal Security measures.
 
-## 🎯 Scope ของงาน
-ใช้ Skill นี้เมื่อ:
-- **Module Dev**: สร้างหรือแก้ไข Odoo Module (Models, Views, Controllers, Wizards)
-- **Migration/Fix**: แก้ไข Bug หรือปรับปรุงฟีเจอร์ใน Odoo 8 และ 13+
-- **Security**: จัดการ Access Rights (CSV) และ Record Rules (XML)
-- **Workflow**: เมื่อทำงานใน Task ที่เกี่ยวข้องกับ Odoo
+## 🎯 Scope of Work
+Apply this Skill when:
+- **Module Dev**: Building or revising Odoo Modules (Models, Views, Controllers, Wizards).
+- **Migration/Fix**: Squashing Bugs or ameliorating features within Odoo 8 and 13+.
+- **Security**: Configuring Access Rights (CSV) and Record Rules (XML).
+- **Workflow**: Engaging in Odoo-related tasks throughout its lifecycle.
 
 ---
 
 ## 1. 🔍 Platform & Version Detection
-ตรวจสอบสภาพแวดล้อม Odoo ก่อนเริ่มทำงาน:
-1. **Odoo 8**: ค้นหา `__openerp__.py` หรือ `openerp` namespace
-2. **Odoo 13+**: ค้นหา `__manifest__.py` หรือ `odoo` namespace
-3. **Module Structure**: ตรวจสอบโฟลเดอร์ `addons/` หรือ `models/`, `views/`
+Check the Odoo environment preceding any actions:
+1. **Odoo 8**: Search for `__openerp__.py` or the `openerp` namespace.
+2. **Odoo 13+**: Search for `__manifest__.py` or the `odoo` namespace.
+3. **Module Structure**: Inspect directories like `addons/` or `models/`, `views/`.
 
 ---
 
@@ -32,13 +32,13 @@ Skill นี้ใช้เพื่อช่วยพัฒนาฟีเจ�
 - **Fields**: `snake_case`
 
 ### Persistence Patterns (Inheritance)
-- **Model**: ใช้ `_inherit` เพื่อขยายความสามารถโมเดลเดิม
-- **View**: ใช้ `<xpath expr="..." position="...">` เพื่อแก้ไข UI เดิมเสมอ เพื่อลดการ conflict
+- **Model**: Leverage `_inherit` to extend an existing model's capability.
+- **View**: Always utilize `<xpath expr="..." position="...">` to adjust existing UI to mitigate conflict.
 
 ### Security (Mandatory)
-ทุกครั้งที่สร้าง Model ใหม่ ต้องมี:
-1. `security/ir.model.access.csv`: สิทธิ์การเข้าถึงรายกลุ่ม
-2. `security/ir.rule.xml`: (ถ้าจำเป็น) ข้อกำหนดการมองเห็น Record (เช่น เห็นเฉพาะของตัวเอง)
+Every time a new Model is fabricated, it must include:
+1. `security/ir.model.access.csv`: Group-level access rights.
+2. `security/ir.rule.xml`: (If necessary) Record visibility specifications (e.g., visible only to the record owner).
 
 ---
 
@@ -52,20 +52,20 @@ Skill นี้ใช้เพื่อช่วยพัฒนาฟีเจ�
 ---
 
 ## 🔄 PRP Workflow Integration (Zero-Script)
-ในการทำงานแต่ละ Task ให้ Agent ยึดหลักการดังนี้:
+For each Task, the Agent must adhere to these principles:
 
 ### Phase: Planning (/02-Plan)
-- ระบุไฟล์ที่ต้องสร้าง/แก้ไขใน `File & Directory Index`
-- กำหนด `Validation Loop`:
+- Designate the files to be created/modified in the `File & Directory Index`.
+- Formulate a `Validation Loop`:
     - **Step 1**: Lint (flake8/pylint-odoo)
     - **Step 2**: Odoo Test (`--test-enable` / `--init` module)
 
 ### Phase: Code (/03-Code)
-- ทำงานทีละ Subtask และอัปเดตสถานะใน `implementation_plan.json`
-- **Gotcha**: ระวังเรื่องการ Cache ของ Odoo หลังแก้ไข Python ต้อง Restart service และอัปเดต Module เสมอ
+- Proceed with Subtasks sequentially and update the status in `implementation_plan.json`.
+- **Gotcha**: Be mindful of Odoo's Caching. Following any Python modifications, inevitably Restart the service and update the Module.
 
 ---
 
 ## 🧪 Testing & Validation
-- **Common Case**: ใช้ `TransactionCase` สำหรับการรัน Business Logic Test
-- **UI Check**: ให้คำแนะนำการตรวจสอบผ่าน Browser (Manual Verification Guide) ใน `qa_report.md`
+- **Common Case**: Utilize `TransactionCase` to execute Business Logic Tests.
+- **UI Check**: Propose instructions for verification via a Browser (Manual Verification Guide) within `qa_report.md`.

@@ -10,62 +10,62 @@ Perform explicit human actions on a task, such as approving, rejecting, or provi
 
 Example: `/10-Human Approve 003`
 Example: `/10-Human Reject 003 "Needs better error handling"`
-Example: `/10-Human Feedback 003 "เพิ่ม validation สำหรับ email format ด้วย"`
+Example: `/10-Human Feedback 003 "Please add validation for email format as well"`
 
 ## Arguments
 
 - **Action**:
   - `Approve`: Mark task as DONE ✅
-  - `Reject`: ส่งงานกลับไปแก้ไข → วนกลับเข้า `/03-Code` 🔄
+  - `Reject`: Send the work back for fixes → Loops back to `/03-Code` 🔄
   - `Review`: Mark task as REVIEW NEEDED.
-  - `Feedback`: เพิ่ม feedback note → วนกลับเข้า `/03-Code` 🔄
+  - `Feedback`: Add a feedback note → Loops back to `/03-Code` 🔄
 - **ID**: Task ID (e.g., `003`).
-- **Message**: เหตุผลหรือ feedback (บังคับสำหรับ Reject/Feedback)
+- **Message**: Reason or feedback (Required for Reject/Feedback)
 
 ---
 
 ## Process
 
 ### Step 1: Locate Task
-ค้นหาโฟลเดอร์ `.auto-claude/specs/{ID}-*/` และอ่าน `implementation_plan.json`
+Search for the folder `.auto-claude/specs/{ID}-*/` and read `implementation_plan.json`.
 
 ### Step 2: Execute Action (PURE AGENTIC)
 
-ให้ Agent ใช้เครื่องมือ `replace_file_content` เพื่อปรับเปลี่ยน `status` ใน `implementation_plan.json` ตามคำสั่งที่ได้รับ:
+Instruct the Agent to use the `replace_file_content` tool to modify the `status` in `implementation_plan.json` according to the received command:
 
 #### ✅ Approve (Mark as DONE)
-- **Update status**: เปลี่ยน `"status": "..."` เป็น `"status": "done"` และ `"xstateState": "done"`
-- **บันทึกบทเรียน**: หากงานนี้มีเทคนิคหรือโครงสร้างที่เป็นต้นแบบที่ดี ให้เพิ่มบันทึกลงใน `.auto-claude/lessons.md` เป็น Best Practice
-- **End of lifecycle** — งานเสร็จสมบูรณ์
+- **Update status**: Change `"status": "..."` to `"status": "done"` and `"xstateState": "done"`
+- **Record lesson**: If this task contains good techniques or a structure that acts as a good prototype, add a note to `.auto-claude/lessons.md` as a Best Practice. Must strictly follow the template in [../PRPs/templates/lessons.template.md](../PRPs/templates/lessons.template.md).
+- **End of lifecycle** — The task is completed.
 
-#### 🔄 Reject (ส่งกลับแก้ไข)
-- **Update status**: เปลี่ยนสถานะกลับเป็น `"status": "in_progress"`
-- **บันทึก Rejection** ใน `qa_report.md` ต่อท้ายหัวข้อ `## Rejection History`:
+#### 🔄 Reject (Send back for fixes)
+- **Update status**: Change the status back to `"status": "in_progress"`
+- **Record Rejection** in `qa_report.md` under the heading `## Rejection History`:
   ```markdown
   ## Rejection History
   ### Round {N} — {Date}
   - **Reviewer**: Human
   - **Reason**: {Message}
   - **Action Items**:
-    - [ ] {สิ่งที่ต้องแก้จาก Message}
+    - [ ] {Things to fix based on the Message}
   ```
-- **แนะนำ Next Step**: _"รัน `/03-Code {ID}` เพื่อแก้ไขตาม Feedback"_
-- **บันทึกบทเรียน**: เพิ่มบันทึกข้อผิดพลาดและสิ่งที่ต้องแก้ไขลงใน `.auto-claude/lessons.md` เพื่อไม่ให้เกิดบั๊กซ้ำเดิมในงานถัดไป
+- **Recommend Next Step**: _"Run `/03-Code {ID}` to apply fixes according to the Feedback"_
+- **Record lesson**: Add a note of the mistake and what needs to be fixed to `.auto-claude/lessons.md` to prevent repeating the bug in the next task. Must strictly follow the template in [../PRPs/templates/lessons.template.md](../PRPs/templates/lessons.template.md).
 
-#### 📝 Feedback (เพิ่ม Note แล้ววนกลับ)
-- **Update status**: เปลี่ยนสถานะกลับเป็น `"status": "in_progress"`
-- **บันทึก Feedback** ใน `qa_report.md` ต่อท้ายหัวข้อ `## Feedback History`:
+#### 📝 Feedback (Add Note and loop back)
+- **Update status**: Change the status back to `"status": "in_progress"`
+- **Record Feedback** in `qa_report.md` under the heading `## Feedback History`:
   ```markdown
   ## Feedback History
   ### Round {N} — {Date}
   - **From**: Human
   - **Feedback**: {Message}
   ```
-- **แนะนำ Next Step**: _"รัน `/03-Code {ID}` เพื่อปรับปรุงตาม Feedback"_
-- **บันทึกบทเรียน (Optional)**: หาก Feedback นั้นเป็นกฎหรือสไตล์ที่ควรจำถาวร ให้เพิ่มบันทึกลงใน `.auto-claude/lessons.md` ตาม Template
+- **Recommend Next Step**: _"Run `/03-Code {ID}` to improve based on the Feedback"_
+- **Record lesson (Optional)**: If the Feedback represents a rule or style that should be memorized permanently, add a note to `.auto-claude/lessons.md`. Must strictly follow the template in [../PRPs/templates/lessons.template.md](../PRPs/templates/lessons.template.md).
 
 ### Step 3: Notify
-แสดงสรุปให้ผู้ใช้:
+Show a summary to the user:
 
 ```
 📋 Human Action: {Action} on Task {ID}
@@ -84,15 +84,15 @@ Example: `/10-Human Feedback 003 "เพิ่ม validation สำหรับ 
     ↓
 Status: human_review
     ↓
-Human ตรวจสอบตาม Manual Verification Guide
+Human verifies according to Manual Verification Guide
     ↓
-    ├── /10-Human Approve {ID}  → ✅ Done (จบ)
-    ├── /10-Human Reject {ID}   → 🔄 in_progress → /03-Code (วนกลับ)
-    └── /10-Human Feedback {ID} → 🔄 in_progress → /03-Code (วนกลับ)
+    ├── /10-Human Approve {ID}  → ✅ Done (Finished)
+    ├── /10-Human Reject {ID}   → 🔄 in_progress → /03-Code (Loop back)
+    └── /10-Human Feedback {ID} → 🔄 in_progress → /03-Code (Loop back)
 ```
 
-> **Reject/Feedback Loop**: จะวนไปเรื่อยๆ จนกว่าจะ Approve
-> ทุกรอบจะมี Round number เพิ่มขึ้น (Round 1, Round 2, ...)
+> **Reject/Feedback Loop**: Will loop continuously until Approved
+> Each round will increment the Round number (Round 1, Round 2, ...)
 
 ---
 

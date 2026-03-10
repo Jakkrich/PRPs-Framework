@@ -17,10 +17,10 @@
 # ------------------------------
 # 2. ARTIFACTS (IGNORED BUT KEEP STRUCTURE)
 # ------------------------------
-.auto-claude/issues/*
-!.auto-claude/issues/.gitkeep
-.auto-claude/specs/*
-!.auto-claude/specs/.gitkeep
+# .auto-claude/issues/*
+# !.auto-claude/issues/.gitkeep
+# .auto-claude/specs/*
+# !.auto-claude/specs/.gitkeep
 
 # ------------------------------
 # 3. BACKEND & TOOLS
@@ -51,6 +51,7 @@ yarn-error.log
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+.cursor/prp-commit.txt
 # .cursor/ is usually kept, but personal configs can be ignored
 
 # ------------------------------
@@ -74,8 +75,10 @@ PRPs-Framework/_notes/*
 **.env
 
 # ------------------------------
-# 8. Template HTML & App code .cursor\PRPs\extension ยกเว้น .vsix ที่ upload
+# 8. Template HTML & App code .cursor\PRPs\extension with out .vsix upload
 # ------------------------------
 template-html/*
 .cursor/PRPs/extension/*
 !.cursor/PRPs/extension/*.vsix
+
+# .auto-claude/roadmaps_.json

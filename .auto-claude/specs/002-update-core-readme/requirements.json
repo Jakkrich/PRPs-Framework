@@ -1,4 +1,0 @@
-{
-  "task_description": "ปรับปรุงคู่มือ PRPs-Framework/README.md ให้เป็นปัจจุบัน โดยอัปเดตชื่อคำสั่ง (Commands), โครงสร้างโฟลเดอร์ (Folder Structure) และ Workflow ให้ตรงกับสถานะล่าสุดของ Framework",
-  "workflow_type": "feature"
-}

@@ -1,8 +1,8 @@
 ---
 name: prp-core-git-committer
 description: |
-  สถาปัตยกรรมเดิมของ prp-core: ผู้ช่วยทำ Commit (Git Committer) 
-  ช่วย Stage ไฟล์และเขียน Commit Message แบบมาตรฐาน (feat, fix, etc.) ตามการเปลี่ยนแปลงใน Workspace
+  Original architecture from prp-core: Commit assistant (Git Committer).
+  Helps stage files and draft standard Commit Messages (feat, fix, etc.) according to Workspace changes.
 model: claud-3-5-sonnet
 color: gray
 ---

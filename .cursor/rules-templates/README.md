@@ -1,30 +1,42 @@
-# 📋 Cursor Rules Templates
+# 📋 PRPs Rules Templates
 
-รวม "แม่พิมพ์กฎเหล็ก" (Standardization) สำหรับควบคุมคุณภาพโค้ดและการทำงานของ AI ในแต่ละภาษาหรือ Framework เพื่อให้โปรเจกต์คงมาตรฐานเดียวกันเสมอ
+Contains "Standardized Iron Rules" for controlling code quality and AI behavior across different languages and frameworks. These templates ensure that the project consistently maintains high standards, regardless of the IDE used.
 
-## 📑 รายการ Template
-- **`rules.template-base-fastapi`**: กฎสำหรับ Python/FastAPI (Async, Pydantic, Code modularity)
-- **`rules.template-base-odoo`**: กฎสำหรับ Odoo ERP (Models, Views, Security, Version detection)
-- **`rules.template-base-php`**: กฎสำหรับ PHP/CI/Yii (MVC patterns, Security, SQL injection prevention)
-
----
-
-## 🚀 วิธีการใช้งาน
-### 1. ใช้งานผ่านคำสั่ง `/00-Init` (แนะนำ)
-เมื่อคุณรันคำสั่ง `/00-Init`, AI จะทำการ:
-1. **Auto-Detect**: ตรวจสอบ Codebase ว่าใช้เทคโนโลยีอะไร
-2. **Auto-Apply**: คัดลอกกฎจาก Template ที่ตรงกันไปสร้าง/อัปเดตไฟล์ `.cursorrules` ที่ Root ของโปรเจกต์โดยอัตโนมัติ
-
-### 2. ใช้งานแบบ Manual
-คุณสามารถคัดลอกเนื้อหาในไฟล์ Template ที่ต้องการ ไปวางไว้ในไฟล์ `.cursorrules` เพื่อเปิดใช้งานกฎเหล่านั้นใน Chat หรือ Composer ได้ทันที
+## 📑 Template List
+- **`rules.template-base-fastapi`**: Rules for Python/FastAPI (Async, Pydantic, Code modularity).
+- **`rules.template-base-odoo`**: Rules for Odoo ERP (Models, Views, Security, Version detection).
+- **`rules.template-base-php`**: Rules for PHP (MVC patterns, Security, SQL injection prevention).
 
 ---
 
-## 🛠️ การเพิ่ม Template ใหม่
-หากคุณมี Stack ใหม่ (เช่น Node.js, React, Go):
-1. สร้างไฟล์ใหม่โดยใช้ format `rules.template-base-{stack_name}`
-2. กำหนดกฎที่สำคัญ เช่น Naming convention, File size limit, และ AI behavior
-3. อัปเดตเงื่อนไขในคำสั่ง `/00-Init` เพื่อให้รองรับการตรวจจับ Stack ใหม่นี้
+## 🚀 How to Use
+
+### 1. Via `/00-Init` Workflow (Recommended)
+When you run the `/00-Init` workflow, the AI will:
+1. **Auto-Detect**: Inspect the codebase to determine the technology stack.
+2. **Auto-Apply**: Copy rules from the matching template to create or update the rules file at the root of the project (e.g., `.cursorrules`, `.cursorrules`, or `.cursorrules`).
+
+### 2. Manual Use
+You can copy the contents of your desired template file and paste them into your active rules file to activate those rules in the AI Chat immediately.
 
 ---
-*หมายเหตุ: ไฟล์เหล่านี้คือ "มาตรฐานกลาง" ของทีม การเปลี่ยนแปลงใดๆ ควรได้รับการพิจารณาถึงผลกระทบในวงกว้าง*
+
+## 🔄 Multi-IDE Folder Mapping
+Depending on your active IDE, this folder may have a different name. Use `active-ide.py` to switch:
+
+| IDE | Folder Location | Rules File Created |
+| :--- | :--- | :--- |
+| **Cursor** | `.cursor/rules-templates/` | `.cursorrules` |
+| **Antigravity** | `.cursor/rules-templates/` | `.cursorrules` |
+| **Windsurf** | `.cursor/rules-templates/` | `.cursorrules` |
+
+---
+
+## 🛠️ Adding a New Template
+If you have a new stack (e.g., Node.js, React, Go):
+1. Create a new file using the format `rules.template-base-{stack_name}`.
+2. Define important rules such as naming conventions, file size limits, and AI behavior.
+3. Update the logic in the `/00-Init` workflow to support detecting this new stack.
+
+---
+*Note: These files serve as the "central standard" for the team. Any changes should be carefully considered regarding their broader impact across all supported IDEs.*

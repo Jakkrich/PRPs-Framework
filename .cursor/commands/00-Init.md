@@ -1,65 +1,65 @@
 # PRP: Init Context Auto-Sync
 
-คำสั่งนี้คือกระดูกสันหลังของ Framework ใช้สำหรับ **สร้างหรืออัปเดตบริบทโครงการ (Project Context)** โดยการรวมพลังระหว่างการสแกนโครงสร้างโปรเจกต์ (IDE Context) และการวิเคราะห์ทางเทคนิคผ่าน Backend Tools (`_tools`)
+This command is the backbone of the Framework, used to **create or update the Project Context** by combining IDE project structure scanning and technical analysis via Backend Tools (`_tools`).
 
-## การใช้งาน
+## Usage
 
-รันคำสั่งโดยพิมพ์:
+Run the command by typing:
 ```
 /00-Init
 ```
-## วัตถุประสงค์
+## Objectives
 
-1.  **AI Analysis**: วิเคราะห์ Stack, Dependencies และเตรียมบริบทโครงการโดยใช้เครื่องมือของ Agent เอง
-2.  **IDE Context Setup**: สร้างหรืออัปเดต `INITIAL.md` เพื่อเป็น "หน้าแรก" ของงาน ให้ AI เข้าใจโครงสร้างและแผนงานปัจจุบัน
-3.  **Requirements Summary**: รวบรวมสรุปเป้าหมายจากงานใน `.auto-claude/` ทั้งหมด
+1.  **AI Analysis**: Analyze the Stack, Dependencies, and prepare the project context using the agent's own tools.
+2.  **IDE Context Setup**: Create or update `INITIAL.md` to serve as the "front page" of the work, helping the AI understand the current structure and plans.
+3.  **Requirements Summary**: Gather summaries of all goals from tasks in `.auto-claude/`.
 
-## ขั้นตอนการทำงาน (Process)
+## Process
 
 ### 1. Execute AI-Powered Sync & Project Detection
 
-**การระบุโปรเจกต์ (Project Identification)**:
-1. **Handle `@module`**: หากผู้ใช้ระบุ `@module` (เช่น `/00-Init @module1`) ให้ AI ค้นหาโฟลเดอร์ที่มีชื่อนั้นและมีโฟลเดอร์ `.auto-claude` อยู่ภายใน
-2. **Auto-Detection**: หากไม่ระบุ `@module`:
-   - ตรวจสอบไฟล์ที่เปิดอยู่ใน Editor ปัจจุบัน ว่าอยู่ใน Sub-folder ที่มี `.auto-claude` หรือไม่
-   - หากไม่พบ ให้ Scan หา `.auto-claude` ทั้งหมดใน Workspace
-   - หากพบที่เดียว ให้ใช้ที่นั่น หากพบหลายที่ ให้ถามผู้ใช้หรือเลือกที่ Root เป็นค่าเริ่มต้น
-3. **Set Active Project**: บันทึก Path ของโปรเจกต์ที่เลือกใน `INITIAL.md` ภายใต้หัวข้อ `Active Project`
+**Project Identification**:
+1. **Handle `@module`**: If the user specifies `@module` (e.g., `/00-Init @module1`), the AI will search for a folder with that name containing an `.auto-claude` folder inside.
+2. **Auto-Detection**: If `@module` is not specified:
+   - Check if the currently open file in the Editor is inside a sub-folder that contains `.auto-claude`.
+   - If not found, scan for all `.auto-claude` occurrences in the Workspace.
+   - If one is found, use it. If multiple are found, ask the user or default to the Root.
+3. **Set Active Project**: Save the selected project's Path in `INITIAL.md` under the heading `Active Project`.
 
 ### 2. Identify Stack & Framework
-- วิเคราะห์ภาษาและ framework ที่ใช้ใน `Active Project` (เช่น Odoo 8, Python, JS)
-- ตรวจสอบไฟล์สำคัญใน Path นั้น ๆ
+1. **Analyze Stack**: Analyze the language and framework used in the `Active Project` (e.g., Odoo 8, Python, JS).
+2. **Inspect Files**: Inspect important files in that Path.
 3. **Generate/Update .cursorrules**: 
-   - ตรวจสอบ Stack ที่พบ แล้วเลือก Template ที่ตรงกันจาก `.cursor/rules-templates/`
-   - ใช้ `write_to_file` เพื่อนำเนื้อหาจาก Template มาสร้างหรืออัปเดตไฟล์ `.cursorrules` ที่ root
-4. **Update INITIAL.md**: ใช้ `replace_file_content` หรือ `write_to_file` เพื่ออัปเดตข้อมูลใน `INITIAL.md`:
-   - เติมรายชื่อ specs ที่พบใน `.auto-claude/specs/`
-   - อัปเดต **Last Sync** เป็นวันเวลาปัจจุบัน
-   - สรุป **Project Overview** ตามที่ตรวจพบ
+   - Check the detected Stack and select the matching Template from `../rules-templates/`.
+   - Use `write_to_file` to bring content from the Template to create or update the `.cursorrules` file at the root.
+4. **Update INITIAL.md**: Use `replace_file_content` or `write_to_file` to update information in `INITIAL.md`:
+   - Fill in the list of specs found in `.auto-claude/specs/`.
+   - Update **Last Sync** to the current date and time.
+   - Summarize the **Project Overview** based on findings.
 
-### 2. Project Structure & Requirements Scanning
-ทำความเข้าใจโปรเจกต์เชิงลึก:
-- **Project Structure**: ค้นหาโฟลเดอร์สำคัญ (src, tests, docs, config)
-- **Task Indexing**: สแกนโฟลเดอร์ `.auto-claude/specs/` และ `.auto-claude/issues/` เพื่อหางานที่เสร็จแล้วหรือกำลังทำอยู่
-- **Goal Summary**: อ่านหัวข้อ Goal จากงานแต่ละตัวเพื่อสรุปความต้องการของระบบ
+### 3. Project Structure & Requirements Scanning
+Understand the project deeply:
+- **Project Structure**: Find key folders (src, tests, docs, config).
+- **Task Indexing**: Scan the `.auto-claude/specs/` and `.auto-claude/issues/` folders for completed or ongoing tasks.
+- **Goal Summary**: Read the Goal section from each task to summarize the system requirements.
 
-### 3. Update INITIAL.md & .cursorrules (The Source of Truth)
-สร้างหรืออัปเดตไฟล์สำคัญ:
-- **.cursorrules**: กฎเหล็กของโปรเจกต์ที่สอดคล้องกับ Tech Stack
-- **INITIAL.md**: สารบัญและบริบทโครงการ
-   - **Project Overview**: ประเภทโปรเจกต์และ Stack หลัก
-   - **Project Context (Auto-Synced)**: รายการ Allowed Commands และสถานะ Sync ล่าสุด
-   - **Last Sync**: เวลาที่ทำการ Sync ล่าสุด
+### 4. Update INITIAL.md & .cursorrules (The Source of Truth)
+Create or update key files:
+- **.cursorrules**: Strict rules for the project aligning with the Tech Stack.
+- **INITIAL.md**: Table of contents and project context.
+   - **Project Overview**: Project type and core Stack.
+   - **Project Context (Auto-Synced)**: List of Allowed Commands and the latest Sync status.
+   - **Last Sync**: The time of the most recent Sync.
 
-### 4. Verify & Signal Readiness
-- ตรวจสอบว่า `INITIAL.md` มีข้อมูลครบถ้วนและพร้อมเป็นบริบทให้ AI ตัวอื่น
-- สรุปผลให้ผู้ใช้งานทราบว่า "โปรเจกต์พร้อมสำหรับการทำงานแบบ Agentic แล้ว"
+### 5. Verify & Signal Readiness
+- Ensure that `INITIAL.md` has complete information and is ready to act as context for other AIs.
+- Provide a summary to the user indicating that "The project is ready for Agentic work."
 
-## ประโยชน์ (Benefits)
-- **Consistency**: ข้อมูลใน IDE ตรงกับสิ่งที่ Backend ตรวจพบ 100%
-- **Token Efficiency**: AI ไม่ต้องเสีย Token สแกนไฟล์เองทั้งหมด เพราะทุกอย่างสรุปไว้ใน `INITIAL.md` แล้ว
-- **Traceability**: เชื่อมโยงทุกปัญหากับสเปค แผนงาน และโค้ดเข้าด้วยกัน
+## Benefits
+- **Consistency**: Information in the IDE matches the Backend findings 100%.
+- **Token Efficiency**: The AI does not waste Tokens scanning all files itself, as everything is summarized in `INITIAL.md`.
+- **Traceability**: Connects every issue with specs, plans, and code.
 
 ## System Prompt / Persona
-- **Context Engineer**: เน้นการสร้างโครงสร้างบริบทที่ AI อ่านง่ายและทำงานได้ทันที
-- **Automation Expert**: ทำหน้าที่เป็นสะพานเชื่อมระหว่าง Python Scripts และ Cursor IDE
+- **Context Engineer**: Focuses on structuring context so it's easy for AI to read and act upon immediately.
+- **Automation Expert**: Acts as a bridge between Python Scripts and Cursor IDE.

@@ -38,7 +38,7 @@ Do not touch code outside scope unless it directly affects the simplification.
 ### Step 1: Identify Target Code
 
 1. Get the diff or specified files
-2. Read project guidelines (CLAUDE.md or equivalent)
+2. Read project guidelines (AI.md or equivalent)
 3. Identify recently modified sections
 4. Note the original behavior to preserve
 
@@ -59,7 +59,7 @@ Look for these simplification opportunities:
 
 ### Step 3: Apply Project Standards
 
-Check and apply project-specific patterns from CLAUDE.md:
+Check and apply project-specific patterns from AI.md:
 
 | Category | What to Standardize |
 |----------|---------------------|
@@ -96,7 +96,7 @@ For each simplification:
 ### Scope
 - **Simplifying**: [git diff / specific files / PR diff]
 - **Files**: [list of files in scope]
-- **Guidelines**: [CLAUDE.md / other source]
+- **Guidelines**: [AI.md / other source]
 
 ---
 
@@ -117,7 +117,7 @@ For each simplification:
 ```
 
 **Why**: [Brief explanation of the improvement]
-**Functionality**: Preserved ✓
+**Functionality**: Preserved โ“
 
 ---
 
@@ -136,7 +136,7 @@ For each simplification:
 ```
 
 **Why**: [Explanation]
-**Functionality**: Preserved ✓
+**Functionality**: Preserved โ“
 
 ---
 
@@ -200,7 +200,7 @@ gh pr comment <PR_NUMBER> --body "<comment>"
 
 | File | Change | Lines |
 |------|--------|-------|
-| `path/to/file.ts` | Brief description | X → Y |
+| `path/to/file.ts` | Brief description | X โ’ Y |
 
 ### Summary
 [1-2 sentence summary]

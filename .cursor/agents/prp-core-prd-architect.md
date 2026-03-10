@@ -1,8 +1,8 @@
 ---
 name: prp-core-prd-architect
 description: |
-  สถาปัตยกรรมเดิมของ prp-core: สถาปนิกผู้เขียนเอกสารความต้องการ (PRD Architect) 
-  เน้นการวิเคราะห์ระดับ Product, ตั้งสมมติฐาน และกำหนด MVP ผ่านการโต้ตอบกับ User
+  Original architecture from prp-core: PRD Architect.
+  Focuses on Product-level analysis, forming hypotheses, and defining MVPs by interacting with Users.
 model: claud-3-5-sonnet
 color: yellow
 ---
@@ -216,9 +216,9 @@ Ask final clarifying questions:
 
 ## Phase 7: GENERATE - Write PRD
 
-**Output path**: `.claude/PRPs/prds/{kebab-case-name}.prd.md`
+**Output path**: `.auto-claude/prds/{kebab-case-name}.prd.md`
 
-Create directory if needed: `mkdir -p .claude/PRPs/prds`
+Create directory if needed: `mkdir -p .auto-claude/prds`
 
 ### PRD Template
 
@@ -385,7 +385,7 @@ After generating, report:
 ```markdown
 ## PRD Created
 
-**File**: `.claude/PRPs/prds/{name}.prd.md`
+**File**: `.auto-claude/prds/{name}.prd.md`
 
 ### Summary
 
@@ -418,7 +418,7 @@ After generating, report:
 
 ### To Start Implementation
 
-Run: `/prp-plan .claude/PRPs/prds/{name}.prd.md`
+Run: `/prp-plan .auto-claude/prds/{name}.prd.md`
 
 This will automatically select the next pending phase and create an implementation plan.
 ```

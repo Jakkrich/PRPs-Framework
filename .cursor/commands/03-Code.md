@@ -12,7 +12,7 @@ You are an orchestrator. Your goal is to coordinate the coding process using the
 
 ### Phase 1: Context Setup
 - Locate the task directory `.auto-claude/specs/{ID}/`.
-- Update `implementation_plan.json`: set `status` to `in_progress` and `xstateState` to `coding`.
+- Update `implementation_plan.json`: set `status` to `in_progress`, `planStatus` to `approved`, and `xstateState` to `coding`.
 - Update `task_logs.json`: set `coding.status` to `active`.
 
 ### Phase 2: Coding Execution
@@ -27,7 +27,7 @@ You are an orchestrator. Your goal is to coordinate the coding process using the
 
 ### Phase 3: Finalization
 - Once all subtasks are `completed`, verify the full suite passes (Lint, Test).
-- Update `implementation_plan.json`: set status to `ai_review`.
+- Update `implementation_plan.json`: set `status` to `ai_review`, `planStatus` to `review`, and `xstateState` to `qa_review`.
 - Update `task_logs.json`: set `coding.status` to `completed`.
 
 ---

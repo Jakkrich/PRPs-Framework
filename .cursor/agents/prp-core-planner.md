@@ -1,8 +1,8 @@
 ---
 name: prp-core-planner
 description: |
-  สถาปัตยกรรมเดิมของ prp-core: เน้นการวางแผนผ่านการสำรวจ codebase และ research อย่างเป็นระบบ
-  ใช้สำหรับสร้าง Implementation Plan แบบละเอียดตามมาตรฐานเดิมของโปรเจกต์
+  Original architecture from prp-core: Focuses on planning through codebase exploration and systematic research.
+  Used to build detailed Implementation Plans according to the original project standards.
 model: claud-3-5-sonnet
 color: blue
 ---
@@ -329,7 +329,9 @@ Document what exists with precise file:line references. No suggestions.
 
 ```markdown
 APPROACH_CHOSEN: [description]
+COMPLEXITY_LEVEL: [simple|standard|complex]
 RATIONALE: [why this over alternatives - reference codebase patterns]
+APPROACH_DETAILS: [detailed technical approach for the chosen solution]
 
 ALTERNATIVES_REJECTED:
 
@@ -353,9 +355,14 @@ NOT_BUILDING (explicit scope limits):
 
 ## Phase 6: GENERATE - Implementation Plan File
 
-**OUTPUT_PATH**: `.claude/PRPs/plans/{kebab-case-feature-name}.plan.md`
+**OUTPUT_PATH**: `.auto-claude/specs/{task-id}/`
+Files to generate:
+- `plan.md` (Markdown summary)
+- `implementation_plan.json` (Dashboard source of truth)
+- `context.json` (RAG intelligence)
+- `task_logs.json` (Timeline log)
 
-Create directory if needed: `mkdir -p .claude/PRPs/plans`
+Create directory if needed: `mkdir -p .auto-claude/specs/{task-id}`
 
 **PLAN_STRUCTURE** (the template to fill and save):
 
@@ -695,7 +702,7 @@ Use Browser MCP to verify:
 </process>
 
 <output>
-**OUTPUT_FILE**: `.claude/PRPs/plans/{kebab-case-feature-name}.plan.md`
+**OUTPUT_FILE**: `.auto-claude/specs/{task-id}/plan.md`
 
 **If input was from PRD file**, also update the PRD:
 
@@ -710,7 +717,11 @@ Use Browser MCP to verify:
 ```markdown
 ## Plan Created
 
-**File**: `.claude/PRPs/plans/{feature-name}.plan.md`
+**Files Created**:
+- `.auto-claude/specs/{task-id}/plan.md`
+- `.auto-claude/specs/{task-id}/implementation_plan.json`
+- `.auto-claude/specs/{task-id}/context.json`
+- `.auto-claude/specs/{task-id}/task_logs.json`
 
 {If from PRD:}
 **Source PRD**: `{prd-file-path}`
@@ -730,25 +741,7 @@ To start: `git worktree add -b phase-{X} ../project-phase-{X} && cd ../project-p
 - {M} files to UPDATE
 - {K} total tasks
 
-**Key Patterns Discovered**:
-- {Pattern 1 from codebase-explorer/analyst with file:line}
-- {Pattern 2 from codebase-explorer/analyst with file:line}
-
-**External Research**:
-- {Key doc 1 with version}
-- {Key doc 2 with version}
-
-**UX Transformation**:
-- BEFORE: {one-line current state}
-- AFTER: {one-line new state}
-
-**Risks**:
-- {Primary risk}: {mitigation}
-
-**Confidence Score**: {1-10}/10 for one-pass implementation success
-- {Rationale for score}
-
-**Next Step**: To execute, run: `/prp-implement .claude/PRPs/plans/{feature-name}.plan.md`
+**Next Step**: To execute, run: `/prp-implement .auto-claude/specs/{task-id}/plan.md`
 ```
 
 </output>

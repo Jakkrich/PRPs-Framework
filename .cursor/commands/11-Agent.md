@@ -13,8 +13,28 @@ Example: `/11-Agent silent-failure-hunter src/services/`
 
 ## Available Agents
 
-Located in `.cursor/agents/`:
+Located in `../agents/` (or depending on the IDE config folder):
 
+### 🧑‍💻 Specialist Coders
+| `frontend-specialist` | UI/UX Developer. Expert in React, Next.js, and beautiful UI. |
+| `backend-specialist` | API & DB Engineer. Expert in API design and server logic. |
+| `mobile-developer` | Mobile Engineer. Expert in React Native or Flutter. |
+| `game-developer` | Game Engine Expert. Expert in game loops and rendering. |
+
+### 🛡️ Audit & Quality Assurance
+| `security-auditor` | Security Expert. Hunts for vulnerabilities and logic flaws. |
+| `penetration-tester` | White Hat Hacker. Simulates attacks to test system resilience. |
+| `performance-optimizer`| Performance Expert. Profiles code and optimizes bottlenecks. |
+| `seo-specialist` | SEO Consultant. Audits web pages for SEO compliance. |
+| `test-engineer` | QA Coder. Dedicated to writing Unit and Integration tests. |
+
+### 🏗️ Infrastructure & Architecture
+| `orchestrator` | Chief Commander. Coordinates multiple agents for complex tasks. |
+| `database-architect` | DB Designer. Optmizes complex queries and schema design. |
+| `devops-engineer` | CI/CD Manager. Handles Docker and Deployment pipelines. |
+| `code-archaeologist` | Legacy Code Expert. Deciphers undocumented legacy code. |
+
+### 🔍 Explore & Review (PRP Core)
 | `discuss-spec` | Discusses and refines specifications (`spec.md`) with the developer |
 | `code-reviewer` | Reviews code for guidelines, bugs, and quality |
 | `code-simplifier` | Refactors code to be cleaner without changing logic |
@@ -30,25 +50,25 @@ Located in `.cursor/agents/`:
 
 > **Note**: `coach-guideline.md` is a guideline file, not an invocable agent.
 
-## Model Selection Guide (คำแนะนำในการเลือก Model ตามเป้าหมาย)
+## Model Selection Guide
 
-เพื่อให้ได้ผลลัพธ์ที่ดีที่สุด คุณสามารถเลือกใช้ Model ตาม "ตระกูล" ที่เหมาะสมกับประเภทของงานได้ดังนี้ครับ (โดยปกติ Model เวอร์ชั่นล่าสุดในตระกูลนั้นๆ จะให้ผลลัพธ์ที่ดีที่สุด):
+To get the best results, you can pick a Model according to the "family" that best fits the type of task as follows (usually, the latest Model version in that family gives the best results):
 
-| ตระกูล Model | เหมาะสำหรับงานประเภท | ตัวอย่าง Agent |
+| Model Family | Suitable for Task Type | Example Agent |
 | :--- | :--- | :--- |
-| **🥇 Claude Opus / DeepSeek R1** | **งานที่ต้อง "คิด" ลึกซึ้ง**: การตั้งคำถาม, วางแผนสถาปัตยกรรม, แก้ปัญหาตรรกะที่ซับซ้อน | `discuss-spec`, `codebase-analyst` |
-| **🥈 Claude Sonnet / Gemini Pro** | **งานที่ต้อง "ทำ" ให้เป๊ะ**: เขียนโค้ด, ตรวจสอบไวยากรณ์ (Syntax), ทำตามกฎระเบียบโปรเจกต์ | `reviewer`, `coder`, `simplifier` |
-| **🥉 GPT-4o / Gemini Flash** | **งานที่ต้อง "หา" ข้อมูล**: สแกนไฟล์จำนวนมาก, สรุปใจความสำคัญจากเว็บหรือ PDF | `explorer`, `researcher`, `docs-impact` |
+| **🥇 Claude Opus / DeepSeek R1** | **Tasks requiring deep "thinking"**: Asking questions, architectural planning, resolving complex logic | `discuss-spec`, `codebase-analyst` |
+| **🥈 Claude Sonnet / Gemini Pro** | **Tasks requiring "precision execution"**: Writing code, Syntax checking, following project rules | `reviewer`, `coder`, `simplifier` |
+| **🥉 GPT-4o / Gemini Flash** | **Tasks requiring "finding" information**: Scanning massive amounts of files, summarizing key insights from web or PDFs | `explorer`, `researcher`, `docs-impact` |
 
-> 💡 **สรุปแนวทาง:**
-> - ถ้าต้องการ **"คู่คิด"** มาช่วยเถียงหรือวางแผน → เลือก **Opus / R1**
-> - ถ้าต้องการ **"ช่างฝีมือ"** มาเขียนโค้ดให้สวยและถูกกฎ → เลือก **Sonnet / Pro**
-> - ถ้าต้องการ **"คนหาข่าว"** มาสรุปข้อมูลให้เร็วที่สุด → เลือก **GPT-4o / Flash**
+> 💡 **Summary Guide:**
+> - If you want a **"Thinking Partner"** to debate or plan → Choose **Opus / R1**
+> - If you want an **"Artisan"** to write beautiful and compliant code → Choose **Sonnet / Pro**
+> - If you want a **"Researcher"** to summarize info as fast as possible → Choose **GPT-4o / Flash**
 
 ## Process
 
 1.  **Load Persona**
-    - Read the content of `.cursor/agents/{AGENT_NAME}.md`.
+    - Read the content of `../agents/{AGENT_NAME}.md`.
     - Adopt the persona, tone, and strict rules defined in that file.
 
 2.  **Execute Task**

@@ -34,4 +34,4 @@ You are an orchestrator. Your goal is to call the specialized PRD Architect agen
 
 ---
 
-📌 **Next Step**: Run `/01-New-Task` referencing the generated PRD to begin execution.
+📌 **Next Step**: Run `/01-Task` referencing the generated PRD to begin execution.

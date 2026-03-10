@@ -1,75 +1,97 @@
-# 🤖 Cursor Specialist Agents
+# 🤖 PRPs Specialist Agents (Personas)
 
-รวมรายชื่อและหน้าที่ของ AI Agents เฉพาะทาง (Personas) ที่ใช้ในโปรเจกต์นี้ เพื่อถอดบทบาทให้ AI ทำงานได้แม่นตรงตามวัตถุประสงค์
+List of names and roles of the specialized AI Agents (Personas) used in this framework to define AI behaviors for accurate and objective-driven performance across multiple IDEs.
 
-## 📋 วิธีใช้งาน
-คุณสามารถเรียกใช้ Agent เหล่านี้ผ่านคำสั่ง:
+## 📋 How to use
+In your AI Chat (Cursor, Windsurf, Antigravity), you can invoke these Agents using the command:
 ```text
 /11-Agent {AGENT_NAME} {TARGET_FILE/DIR}
 ```
-*ตัวอย่าง: `/11-Agent discuss-spec .auto-claude/specs/007/spec.md`*
+*Example: `/11-Agent discuss-spec .auto-claude/specs/007/spec.md`*
+
+> 💡 **Tip**: These personas are stored in the `agents/` folder of your active IDE directory (e.g., `.cursor/agents/`, `.cursor/agents/`, or `.cursor/agents/`). Use `active-ide.py` to switch between them.
 
 ---
 
 ## 🏗️ Requirements & Planning
-| Agent Name | Role | หน้าที่หลัก |
+| Agent Name | Role | Main Responsibilities |
 |:---|:---|:---|
-| **`discuss-spec`** | Requirement Engineer | ท้าทายและปรับจูน `spec.md` ให้เคลียร์ 360 องศาก่อนเริ่มงาน |
-| **`web-researcher`** | Researcher | ค้นหาข้อมูลเชิงลึกจากภายนอก (API, Best Practices) พร้อมระบุแหล่งอ้างอิง |
+| **`discuss-spec`** | Requirement Engineer | Challenges and fine-tunes `spec.md` to be 360-degree clear before starting work. |
+| **`web-researcher`** | Researcher | Searches for in-depth external information (APIs, Best Practices) and provides references. |
 
 ## 🔍 Exploration & Analysis
-| Agent Name | Role | หน้าที่หลัก |
+| Agent Name | Role | Main Responsibilities |
 |:---|:---|:---|
-| **`codebase-explorer`** | Explorer | ค้นหาว่า Code อยู่ที่ไหน และหา Pattern ที่มีอยู่แล้วเพื่อนำมาใช้ซ้ำ |
-| **`codebase-analyst`** | Analyst | วิเคราะห์ Flow ของข้อมูลและการทำงานร่วมกันของ Module ต่างๆ |
-| **`silent-failure-hunter`**| Bug Hunter | ตามล่าหาจุดเสี่ยงที่ Error อาจถูกกลืน (Swallowed) หรือไม่มี Log |
+| **`codebase-explorer`** | Explorer | Locates code and finds existing patterns for reuse. |
+| **`codebase-analyst`** | Analyst | Analyzes data flow and interaction between various modules. |
+| **`silent-failure-hunter`**| Bug Hunter | Hunts for risky spots where errors might be Swallowed or unlogged. |
 
 ## 🛠️ Implementation & Review
-| Agent Name | Role | หน้าที่หลัก |
+| Agent Name | Role | Main Responsibilities |
 |:---|:---|:---|
-| **`code-reviewer`** | Senior Reviewer | ตรวจสอบคุณภาพ Code ตามมาตรฐานโปรเจกต์และความปลอดภัย |
-| **`code-simplifier`** | Refactor Expert | ปรับปรุง Code ให้สะอาดและอ่านง่ายขึ้น โดยไม่เปลี่ยน Logic |
-| **`type-design-analyzer`**| Architect | ตรวจสอบการออกแบบ Type และ Interface ให้สอดคล้องกันทั่วโปรเจกต์ |
-| **`comment-analyzer`** | Auditor | ตรวจสอบ Comment ว่าล้าสมัยหรือขาดข้อมูลสำคัญหรือไม่ |
+| **`code-reviewer`** | Senior Reviewer | Audits code quality according to project standards and security. |
+| **`code-simplifier`** | Refactor Expert | Cleans up code to be readable without changing logic. |
+| **`type-design-analyzer`**| Architect | Ensures consistent Type and Interface design across the project. |
+| **`comment-analyzer`** | Auditor | Checks if comments are outdated or lacking critical context. |
 
 ## 🛡️ PRP Core Engine (Legacy & Orchestration)
-| Agent Name | Role | หน้าที่หลัก |
+| Agent Name | Role | Main Responsibilities |
 |:---|:---|:---|
-| **`prp-core-planner`** | Senior Architect | วางแผนการลงมือทำแบบละเอียด (Deep Analysis) ตามมาตรฐานเดิม |
-| **`prp-core-coder`** | Systematic Developer | ลงมือเขียนโค้ดตามแผนงาน พร้อม Validation Loop ตลอดเวลา |
-| **`prp-core-debugger`** | RCA Specialist | หาสาเหตุที่แท้จริงของบั๊กด้วยเทคนิค 5 Whys |
-| **`prp-core-prd-architect`** | Product Architect | ร่างเอกสารความต้องการ (PRD) จากไอเดียร์เริ่มต้น |
-| **`prp-core-codebase-assistant`** | Code Assistant | ตอบคำถามเกี่ยวกับโครงสร้างและตรรกะของโปรเจกต์ |
-| **`prp-core-git-committer`** | Git Specialist | ช่วย Stage ไฟล์และสร้าง Commit Message แบบมาตรฐาน |
-| **`prp-core-git-pr-maker`** | PR Specialist | รวบรวมข้อมูลและสร้าง Pull Request ที่สมบูรณ์ |
+| **`prp-core-planner`** | Senior Architect | creates detailed execution plans (Deep Analysis) based on legacy standards. |
+| **`prp-core-coder`** | Systematic Developer | Writes code according to the plan with a continuous Validation Loop. |
+| **`prp-core-debugger`** | RCA Specialist | Finds fundamental bug causes using the 5 Whys technique. |
+| **`prp-core-prd-architect`** | Product Architect | Drafts Product Requirements Documents (PRD) from initial ideas. |
+| **`prp-core-codebase-assistant`** | Code Assistant | Answers questions about the project's structure and logic. |
+| **`prp-core-git-committer`** | Git Specialist | Helps stage files and create standard Commit Messages. |
+| **`prp-core-git-pr-maker`** | PR Specialist | Gathers information and creates complete Pull Requests. |
 
 ---
 
 ## 🧪 Documentation & Testing
-| Agent Name | Role | หน้าที่หลัก |
+| Agent Name | Role | Main Responsibilities |
 |:---|:---|:---|
-| **`docs-impact-agent`** | Docs Manager | วิเคราะห์ว่าการแก้ไข Code กระทบกับเอกสารส่วนไหนบ้าง |
-| **`pr-test-analyzer`** | QA Engineer | วิเคราะห์ว่า Pull Request มี Test ครอบคลุมเคสสำคัญครบหรือยัง |
+| **`docs-impact-agent`** | Docs Manager | Analyzes which documentation is affected by code changes. |
+| **`pr-test-analyzer`** | QA Engineer | Analyzes if Pull Requests cover all critical testing scenarios. |
 
 
 ---
 
-## 📘 Guidelines (Reference Only)
-*   **`coach-guideline.md`**: ไฟล์คัมภีร์หลักสำหรับ `/99-Coach` (ไม่ใช่ Agent ที่เรียกใช้โดยตรง แต่เป็นกฎที่ Coach ต้องทำตาม)
+## 🧑‍💻 Specialist Coders
+| Agent Name | Role | Main Responsibilities |
+|:---|:---|:---|
+| **`frontend-specialist`** | UI/UX Developer | Expert in React, Next.js, and creating beautiful user interfaces. |
+| **`backend-specialist`** | API & DB Engineer | Expert in API design, database schemas, and server logic. |
+| **`mobile-developer`** | Mobile Engineer | Expert in React Native or Flutter for iOS/Android apps. |
+| **`game-developer`** | Game Engine Expert | Expert in game loops, rendering, and logic. |
 
----
+## 🛡️ Audit & Quality Assurance
+| Agent Name | Role | Main Responsibilities |
+|:---|:---|:---|
+| **`security-auditor`** | Security Expert | Hunts for vulnerabilities and logic flaws (OWASP). |
+| **`penetration-tester`** | White Hat Hacker | Simulates attacks to test system resilience. |
+| **`performance-optimizer`** | Performance Expert | Profiles code and optimizes bottlenecks (Memory/CPU). |
+| **`seo-specialist`** | SEO Consultant | Audits web pages to ensure Google/SEO compliance. |
+| **`test-engineer`** | QA Coder | Dedicated to writing comprehensive Unit and Integration tests. |
+
+## 🏗️ Infrastructure & Architecture
+| Agent Name | Role | Main Responsibilities |
+|:---|:---|:---|
+| **`orchestrator`** | Chief Commander | Coordinates multiple agents to build complex systems. |
+| **`database-architect`** | DB Designer | Optmizes complex queries, indexing, and schema design. |
+| **`devops-engineer`** | CI/CD Manager | Handles Docker, Deployment pipelines, and server health. |
+| **`code-archaeologist`** | Legacy Code Expert | Deciphers undocumented or extremely messy legacy code. |
 
 ## 🏛️ Legacy Agents (Deprecated)
-*ย้ายไปเก็บที่โฟลเดอร์ `legacy/` เพื่อลดความสับสน เนื่องจากเป็นสถาปัตยกรรมรุ่นเก่า*
+*Moved to the `legacy/` folder to reduce confusion, as they belong to the older architecture.*
 
-| Agent Name | Role | สถานะ / หมายเหตุ |
+| Agent Name | Role | Status / Notes |
 |:---|:---|:---|
-| **`prp-core-issue-investigator`** | Task Investigator | [Legacy] ถูกแทนที่ด้วย `/02-Plan` และ `/06-Debug` |
-| **`prp-core-issue-fixer`** | Fixer | [Legacy] ถูกแทนที่ด้วย `/03-Code` |
-| **`prp-core-reviewer`** | QA Reviewer | [Legacy] ถูกแทนที่ด้วย `auto-qa-expert` ใน `/04-Verify` |
-| **`prp-core-review-orchestrator`**| Orchestrator | [Legacy] ระบบจัดการรีวิวแบบเดิม |
-| **`prp-core-ralph`** | Autonomous Loop | [Legacy] ระบบลูปอัตโนมัติรุ่นแรก |
-| **`prp-core-ralph-canceller`** | Canceller | [Legacy] ใช้สำหรับยกเลิก Ralph Loop |
+| **`prp-core-issue-investigator`** | Task Investigator | [Legacy] Replaced by `/02-Plan` and `/06-Debug`. |
+| **`prp-core-issue-fixer`** | Fixer | [Legacy] Replaced by `/03-Code`. |
+| **`prp-core-reviewer`** | QA Reviewer | [Legacy] Replaced by `auto-qa-expert` in `/04-Verify`. |
+| **`prp-core-review-orchestrator`**| Orchestrator | [Legacy] Old review orchestration system. |
+| **`prp-core-ralph`** | Autonomous Loop | [Legacy] First-generation autonomous loop system. |
+| **`prp-core-ralph-canceller`** | Canceller | [Legacy] Used to cancel the Ralph Loop. |
 
 ---
-*หมายเหตุ: ทุก Agent ถูกออกแบบมาให้ทำงานแบบ **Pure Agentic** โดยจะใช้เครื่องมือมาตรฐานของ Cursor ในการอ่านและแก้ไขไฟล์*
+*Note: All Agents are designed to be **Pure Agentic**, using standard tools (Read/Write/Search) supported by modern AI IDEs and the PRPs-Framework.*

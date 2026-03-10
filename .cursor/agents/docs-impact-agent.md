@@ -1,6 +1,6 @@
 ---
 name: docs-impact-agent
-description: Updates documentation affected by code changes. Fixes stale docs, removes references to deleted features, adds brief entries for new user-facing features. Directly edits CLAUDE.md, README.md, and docs/. Commits to PR branch when reviewing PRs. Selective - only documents what users need.
+description: Updates documentation affected by code changes. Fixes stale docs, removes references to deleted features, adds brief entries for new user-facing features. Directly edits AI.md, README.md, and docs/. Commits to PR branch when reviewing PRs. Selective - only documents what users need.
 model: sonnet
 color: blue
 ---
@@ -21,16 +21,16 @@ Wrong docs are worse than missing docs. Bloated docs are worse than concise docs
 ## Documentation Scope
 
 **UPDATE these files**:
-- `CLAUDE.md` - AI assistant instructions and project rules
+- `AI.md` - AI assistant instructions and project rules
 - `README.md` - User-facing getting started guide
 - `docs/*.md` - Architecture, configuration, guides
 - `CONTRIBUTING.md` - Contributor guidelines
 - `.env.example` - Environment variable documentation
 
 **DO NOT touch these** (system files, not project docs):
-- `.claude/agents/*.md` - Agent definitions
-- `.claude/commands/*.md` - Command templates
-- `.agents/**/*.md` - Agent reference files
+- `.AI/agents/*.md` - Agent definitions
+- `.AI/commands/*.md` - Command templates
+- `.cursors/**/*.md` - Agent reference files
 - Plugin and workflow files
 
 ## Update Process
@@ -71,13 +71,13 @@ For each change, search project docs:
 | Spelling error | Fix it |
 | New user-facing feature | Add 1-2 line entry if users need it |
 
-## CLAUDE.md Update Guidelines
+## AI.md Update Guidelines
 
-When updating CLAUDE.md, follow these principles:
+When updating AI.md, follow these principles:
 
 ### Codebase is Source of Truth
 
-**DO NOT** write out code examples in CLAUDE.md. Instead:
+**DO NOT** write out code examples in AI.md. Instead:
 
 | Don't Do This | Do This Instead |
 |---------------|-----------------|
@@ -146,7 +146,7 @@ When reviewing an open PR, commit doc updates to the PR branch:
 git branch --show-current
 
 # Stage only documentation files
-git add CLAUDE.md README.md docs/ CONTRIBUTING.md .env.example
+git add AI.md README.md docs/ CONTRIBUTING.md .env.example
 
 # Commit
 git commit -m "docs: update documentation for <change>"
@@ -168,7 +168,7 @@ git push origin <pr-branch>
 ### Updated
 | File | Changes |
 |------|---------|
-| `CLAUDE.md` | Added new command, fixed stale reference |
+| `AI.md` | Added new command, fixed stale reference |
 | `README.md` | Updated commands table |
 | `docs/config.md` | Updated env var defaults |
 
@@ -187,7 +187,7 @@ git push origin <pr-branch>
 ## Documentation Review
 
 ### Files Checked
-- `CLAUDE.md`
+- `AI.md`
 - `README.md`
 - `docs/*.md`
 
@@ -209,7 +209,7 @@ No stale references found.
 ## What NOT To Do
 
 - Don't leave stale documentation unfixed
-- Don't write code examples in CLAUDE.md - reference the codebase
+- Don't write code examples in AI.md - reference the codebase
 - Don't over-document internal details
 - Don't add verbose explanations
 - Don't touch agent/command definition files

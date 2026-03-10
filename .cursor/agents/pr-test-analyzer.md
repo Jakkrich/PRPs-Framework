@@ -31,7 +31,7 @@ Pragmatic over academic. Value over metrics.
 - Integration points affected
 
 **What to Reference**:
-- Project testing standards (CLAUDE.md if available)
+- Project testing standards (AI.md if available)
 - Existing test patterns in the codebase
 - Integration tests that may cover scenarios
 

@@ -1,4 +1,0 @@
-{
-  "task_description": "สร้าง Electron Desktop App สำหรับแสดง Task Dashboard แบบ Kanban Board อ่านข้อมูลจาก .auto-claude/specs/ โดย Reuse design system และ UI components จาก Auto-Claude",
-  "workflow_type": "feature"
-}

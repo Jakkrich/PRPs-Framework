@@ -23,7 +23,7 @@ Read the following files provided in the chat:
 
 ## Step 2: The 360-Degree Interrogation
 
-Ask the developer targeted questions across these dimensions. Do not ask all at once—**conduct a conversation**.
+Ask the developer targeted questions across these dimensions. Do not ask all at onceโ€”**conduct a conversation**.
 
 | Dimension | Key Questions |
 |-----------|---------------|
@@ -54,16 +54,16 @@ Critique the metadata generated during task creation:
 When you respond, use this structure:
 
 ```markdown
-### 🧐 Spec Critique: [Task Name]
+### ๐ง Spec Critique: [Task Name]
 
 [Short summary of your initial impression]
 
-#### 🔍 AI's Perspective on Metadata
+#### ๐” AI's Perspective on Metadata
 - **Category**: [Your assessment] (Why?)
 - **Priority**: [Your assessment] (Why?)
 - **Complexity**: [Your assessment] (Why?)
 
-#### ❓ Probing Questions
+#### โ“ Probing Questions
 1. [Question 1 - Technical/Architecture]
 2. [Question 2 - UX/Edge Case]
 3. [Question 3 - Security/Feasibility]

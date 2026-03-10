@@ -5,7 +5,7 @@ from redminelib import Redmine
 from redminelib.exceptions import AuthError, ResourceNotFoundError, ForbiddenError
 from core_utils import validate_and_run
 
-def save_issue_to_md(redmine, issue):
+def save_issue_to_md(redmine, issue, target_path=None):
     try:
         issue_id = issue.id
         # Build path relative to project root
@@ -13,7 +13,12 @@ def save_issue_to_md(redmine, issue):
         script_dir = os.path.dirname(os.path.abspath(__file__))
         project_root = os.path.abspath(os.path.join(script_dir, "..", "..", ".."))
         
-        folder_name = os.path.join(project_root, ".auto-claude", "issues", str(issue_id))
+        if target_path:
+            # Use provided target path (relative to project root)
+            folder_name = os.path.join(project_root, target_path, str(issue_id))
+        else:
+            # Default: .auto-claude/issues/{issue_id}
+            folder_name = os.path.join(project_root, ".auto-claude", "issues", str(issue_id))
         os.makedirs(folder_name, exist_ok=True)
         
         # Define markdown file path
@@ -64,12 +69,15 @@ def main():
 
     parser = argparse.ArgumentParser(description="Fetch Redmine issue and save as Markdown with attachments.")
     parser.add_argument("issue_id", type=int, help="The ID of the Redmine issue to fetch.")
+    parser.add_argument("--target-path", type=str, help="Target path relative to project root (e.g., 'extra-addons/nstda_crm/.auto-claude/issues')")
     args = parser.parse_args()
 
     try:
         redmine = Redmine(url, key=api_key)
-        # Use safety wrapper
-        validate_and_run(redmine, args.issue_id, save_issue_to_md)
+        # Use safety wrapper with target_path
+        def save_with_path(redmine, issue):
+            return save_issue_to_md(redmine, issue, args.target_path)
+        validate_and_run(redmine, args.issue_id, save_with_path)
             
     except AuthError:
         print("ERROR: Authentication failed. Please check your REDMINE_API_KEY in .env")

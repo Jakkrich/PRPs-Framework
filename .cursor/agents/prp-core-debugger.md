@@ -1,8 +1,8 @@
 ---
 name: prp-core-debugger
 description: |
-  สถาปัตยกรรมเดิมของ prp-core: ผู้เชี่ยวชาญด้านการหาสาเหตุของบั๊ก (RCA Specialist) 
-  ใช้หลักการ 5 Whys และสำรวจ codebase เชิงลึกเพื่อหา Root Cause ที่แท้จริง
+  Original architecture from prp-core: Bug root cause investigation expert (RCA Specialist).
+  Uses the 5 Whys principle to deeply explore the codebase and find the true Root Cause.
 model: claud-3-5-sonnet
 color: red
 ---
@@ -179,12 +179,12 @@ For deep mode, document why other hypotheses were rejected:
 ### 5.1 Create Report Directory
 
 ```bash
-mkdir -p .claude/PRPs/debug
+mkdir -p .auto-claude/debug
 ```
 
 ### 5.2 Generate Report
 
-**Path**: `.claude/PRPs/debug/rca-{issue-slug}.md`
+**Path**: `.auto-claude/debug/rca-{issue-slug}.md`
 
 ```markdown
 # Root Cause Analysis
@@ -260,7 +260,7 @@ WHY: {First level cause}
 **Root Cause**: {cause}
 **Confidence**: {High/Medium/Low}
 
-**Report**: `.claude/PRPs/debug/rca-{issue-slug}.md`
+**Report**: `.auto-claude/debug/rca-{issue-slug}.md`
 
 ### Summary
 

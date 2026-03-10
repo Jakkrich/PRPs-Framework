@@ -35,7 +35,7 @@ Always clarify what you're reviewing at the start.
 
 ### Step 1: Gather Context
 
-1. Read project guidelines (CLAUDE.md or equivalent)
+1. Read project guidelines (AI.md or equivalent)
 2. Get the diff or files to review
 3. Identify the languages and frameworks involved
 
@@ -107,7 +107,7 @@ Rate each potential issue 0-100:
 ### Scope
 - **Reviewing**: [git diff / specific files / PR diff]
 - **Files**: [list of files in scope]
-- **Guidelines**: [CLAUDE.md / other source]
+- **Guidelines**: [AI.md / other source]
 
 ---
 
@@ -122,7 +122,7 @@ Rate each potential issue 0-100:
 [Clear description of what's wrong]
 
 **Guideline/Rule**:
-> [Quote from CLAUDE.md or explain the bug]
+> [Quote from AI.md or explain the bug]
 
 **Current Code**:
 ```typescript
